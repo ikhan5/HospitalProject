@@ -11,7 +11,7 @@ using HospitalProject.Data;
 
 namespace HospitalProject.Data
 {
-    public class HospitalCMSContext : IdentityDbContext<ApplicationUser>
+    public class HospitalCMSContext : IdentityDbContext<    ApplicationUser>
     {
         public HospitalCMSContext(DbContextOptions<HospitalCMSContext> options)
         : base(options)

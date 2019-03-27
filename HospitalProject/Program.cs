@@ -24,7 +24,7 @@ namespace HospitalProject
                 {
                     var context = services.GetRequiredService<HospitalCMSContext>();
                     DbInitializer.Initialize(context);
-                }
+                }   
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
