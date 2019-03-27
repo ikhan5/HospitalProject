@@ -20,6 +20,6 @@ namespace HospitalProject.Data
         }
 
 
-        public DbSet<Admin> Users { get; set; }
+        public DbSet<Admin> admin { get; set; }
     }
 }
