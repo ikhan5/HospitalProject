@@ -23,20 +23,22 @@ namespace HospitalProject.Migrations
 
             modelBuilder.Entity("HospitalProject.Models.Admin", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("AdminID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email")
                         .IsRequired();
+
+                    b.Property<string>("UserID");
 
                     b.Property<bool>("UserStatus")
                         .HasMaxLength(255);
 
                     b.Property<int>("UserType");
 
-                    b.HasKey("UserID");
+                    b.HasKey("AdminID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("HospitalProject.Models.ApplicationUser", b =>
@@ -45,6 +47,8 @@ namespace HospitalProject.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<int?>("AdminID");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -64,22 +68,28 @@ namespace HospitalProject.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
+                    b.Property<int?>("ParkingServiceID");
+
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<int?>("PlanYourStayID");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<int?>("UserID");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdminID")
+                        .IsUnique()
+                        .HasFilter("[AdminID] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -89,11 +99,77 @@ namespace HospitalProject.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("UserID")
+                    b.HasIndex("ParkingServiceID")
                         .IsUnique()
-                        .HasFilter("[UserID] IS NOT NULL");
+                        .HasFilter("[ParkingServiceID] IS NOT NULL");
+
+                    b.HasIndex("PlanYourStayID")
+                        .IsUnique()
+                        .HasFilter("[PlanYourStayID] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.EmergencyWaitTime", b =>
+                {
+                    b.Property<int>("EmergencyWaitTimeID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ServiceName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WaitTime")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("EmergencyWaitTimeID");
+
+                    b.ToTable("EmergencyWaitTimes");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.ParkingService", b =>
+                {
+                    b.Property<int>("ParkingServiceID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ParkingNumber");
+
+                    b.Property<string>("ParkingServiceUserID");
+
+                    b.Property<string>("Rate")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("Status");
+
+                    b.HasKey("ParkingServiceID");
+
+                    b.ToTable("ParkingServices");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.PlanYourStay", b =>
+                {
+                    b.Property<int>("PlanYourStayID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("PlanYourStayUserID");
+
+                    b.Property<string>("RatePerDay")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("RoomNumber")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ServiceName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("PlanYourStayID");
+
+                    b.ToTable("PlanYourStays");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -208,7 +284,15 @@ namespace HospitalProject.Migrations
                 {
                     b.HasOne("HospitalProject.Models.Admin", "admin")
                         .WithOne("admin")
-                        .HasForeignKey("HospitalProject.Models.ApplicationUser", "UserID");
+                        .HasForeignKey("HospitalProject.Models.ApplicationUser", "AdminID");
+
+                    b.HasOne("HospitalProject.Models.ParkingService")
+                        .WithOne("user")
+                        .HasForeignKey("HospitalProject.Models.ApplicationUser", "ParkingServiceID");
+
+                    b.HasOne("HospitalProject.Models.PlanYourStay")
+                        .WithOne("user")
+                        .HasForeignKey("HospitalProject.Models.ApplicationUser", "PlanYourStayID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
