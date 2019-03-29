@@ -19,7 +19,12 @@ namespace HospitalProject.Data
 
         }
 
-
-        public DbSet<Admin> Users { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<Navigation> Navigations { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
+        public DbSet<JobPosting> JobPostings { get; set; }
+        public DbSet<DonationForm> DonationForms { get; set; }
+        public DbSet<Donation> Donations { get; set; }
+        public DbSet<Admin> Admins { get; set; }
     }
 }
