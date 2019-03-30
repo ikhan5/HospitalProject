@@ -19,10 +19,16 @@ namespace HospitalProject.Data
 
         }
   
-        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<EmergencyWaitTime> EmergencyWaitTimes { get; set; }
         public DbSet<PlanYourStay> PlanYourStays { get; set; }
         public DbSet<ParkingService> ParkingServices { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<Navigation> Navigations { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
+        public DbSet<JobPosting> JobPostings { get; set; }
+        public DbSet<DonationForm> DonationForms { get; set; }
+        public DbSet<Donation> Donations { get; set; }
 
 
         //I need the code which actually makes this into a table.

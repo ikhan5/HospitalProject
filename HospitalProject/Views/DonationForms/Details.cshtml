@@ -1,0 +1,48 @@
+﻿@model HospitalProject.Models.DonationForm
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DonationForm</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.donationCause)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationCause)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.charityName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.charityName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationGoal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationGoal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.presetAmounts)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.presetAmounts)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.formDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.formDescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.donationFormID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

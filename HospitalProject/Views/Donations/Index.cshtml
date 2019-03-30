@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HospitalProject.Models.Donation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.donorName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.donorEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isRecurring)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.paymentMethod)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.paymentAmount)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonationForm)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.donorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.donorEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isRecurring)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.paymentMethod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.paymentAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonationForm.charityName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.donationID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.donationID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.donationID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
