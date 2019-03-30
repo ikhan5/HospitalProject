@@ -5,10 +5,26 @@ using System.Collections.Generic;
 
 namespace HospitalProject.Migrations
 {
-    public partial class HospitalProject : Migration
+    public partial class intitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    AdminID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    UserStatus = table.Column<bool>(maxLength: 255, nullable: false),
+                    UserType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.AdminID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -24,18 +40,49 @@ namespace HospitalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "EmergencyWaitTimes",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(nullable: false)
+                    EmergencyWaitTimeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(nullable: false),
-                    UserStatus = table.Column<bool>(maxLength: 255, nullable: false),
-                    UserType = table.Column<int>(nullable: false)
+                    ServiceName = table.Column<string>(maxLength: 255, nullable: false),
+                    WaitTime = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserID);
+                    table.PrimaryKey("PK_EmergencyWaitTimes", x => x.EmergencyWaitTimeID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ParkingServices",
+                columns: table => new
+                {
+                    ParkingServiceID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ParkingNumber = table.Column<int>(nullable: false),
+                    ParkingServiceUserID = table.Column<string>(nullable: true),
+                    Rate = table.Column<string>(maxLength: 255, nullable: false),
+                    Status = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParkingServices", x => x.ParkingServiceID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlanYourStays",
+                columns: table => new
+                {
+                    PlanYourStayID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PlanYourStayUserID = table.Column<string>(nullable: true),
+                    RatePerDay = table.Column<string>(maxLength: 255, nullable: false),
+                    RoomNumber = table.Column<string>(maxLength: 255, nullable: false),
+                    ServiceName = table.Column<string>(maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlanYourStays", x => x.PlanYourStayID);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,6 +112,7 @@ namespace HospitalProject.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    AdminID = table.Column<int>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
@@ -72,22 +120,35 @@ namespace HospitalProject.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    ParkingServiceID = table.Column<int>(nullable: true),
                     PasswordHash = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    PlanYourStayID = table.Column<int>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserID = table.Column<int>(nullable: true),
                     UserName = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "UserID",
+                        name: "FK_AspNetUsers_Admins_AdminID",
+                        column: x => x.AdminID,
+                        principalTable: "Admins",
+                        principalColumn: "AdminID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_ParkingServices_ParkingServiceID",
+                        column: x => x.ParkingServiceID,
+                        principalTable: "ParkingServices",
+                        principalColumn: "ParkingServiceID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_PlanYourStays_PlanYourStayID",
+                        column: x => x.PlanYourStayID,
+                        principalTable: "PlanYourStays",
+                        principalColumn: "PlanYourStayID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -204,6 +265,13 @@ namespace HospitalProject.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AdminID",
+                table: "AspNetUsers",
+                column: "AdminID",
+                unique: true,
+                filter: "[AdminID] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -216,11 +284,18 @@ namespace HospitalProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserID",
+                name: "IX_AspNetUsers_ParkingServiceID",
                 table: "AspNetUsers",
-                column: "UserID",
+                column: "ParkingServiceID",
                 unique: true,
-                filter: "[UserID] IS NOT NULL");
+                filter: "[ParkingServiceID] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PlanYourStayID",
+                table: "AspNetUsers",
+                column: "PlanYourStayID",
+                unique: true,
+                filter: "[PlanYourStayID] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -241,13 +316,22 @@ namespace HospitalProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "EmergencyWaitTimes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Admins");
+
+            migrationBuilder.DropTable(
+                name: "ParkingServices");
+
+            migrationBuilder.DropTable(
+                name: "PlanYourStays");
         }
     }
 }

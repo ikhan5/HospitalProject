@@ -5,8 +5,26 @@
     <UserSecretsId>aspnet-HospitalProject-7FC72BA5-4050-472F-AFFC-A0A902BC0110</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20190322173118_HospitalProject.cs" />
+    <Compile Remove="Migrations\20190322173118_HospitalProject.Designer.cs" />
+    <Compile Remove="Migrations\20190328223010_Initial.cs" />
+    <Compile Remove="Migrations\20190328223010_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190328224035_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190328224035_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190328224710_addedkensmodels.cs" />
+    <Compile Remove="Migrations\20190328224710_addedkensmodels.Designer.cs" />
+    <Compile Remove="Migrations\20190328225442_addedkensmodels.cs" />
+    <Compile Remove="Migrations\20190328225442_addedkensmodels.Designer.cs" />
+    <Compile Remove="Migrations\20190328225738_addedkensmodels.cs" />
+    <Compile Remove="Migrations\20190328225738_addedkensmodels.Designer.cs" />
+    <Compile Remove="Migrations\20190328231115_addedkensmodels.cs" />
+    <Compile Remove="Migrations\20190328231115_addedkensmodels.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
