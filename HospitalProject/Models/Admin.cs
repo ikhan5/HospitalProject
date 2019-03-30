@@ -11,7 +11,7 @@ namespace HospitalProject.Models
     public class Admin
     {
         [Key]
-        public int UserID { get; set; }
+        public int AdminID { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
@@ -26,6 +26,11 @@ namespace HospitalProject.Models
 
         [Required(ErrorMessage = "Please choose an option"), Display(Name = "Type: ")]
         public Status UserType { get; set; }
+
+        //This is a one to one relationship between authors and users
+        //In this case the UserID is a string in AspNetUsers
+        [ForeignKey("UserID")]
+        public string UserID { get; set; }
 
         public virtual ApplicationUser admin { get; set; }
     }

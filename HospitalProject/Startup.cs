@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using HospitalProject.Data;
 using HospitalProject.Models;
 using HospitalProject.Services;
+using AutoMapper;
 
 namespace HospitalProject
 {
@@ -29,13 +30,16 @@ namespace HospitalProject
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<HospitalCMSContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.AddAutoMapper();
             services.AddMvc();
         }
 
