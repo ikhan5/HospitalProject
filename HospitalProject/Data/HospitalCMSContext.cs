@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Security.Claims;
 using HospitalProject.Models;
 using HospitalProject.Data;
+using HospitalProject.Models.JobModels;
+using HospitalProject.Models.DonationModels;
+using HospitalProject.Models.MVPModels;
 
 namespace HospitalProject.Data
 {
@@ -43,6 +46,7 @@ namespace HospitalProject.Data
             modelBuilder.Entity<EmergencyWaitTime>().ToTable("EmergencyWaitTimes");
             modelBuilder.Entity<PlanYourStay>().ToTable("PlanYourStays");
             modelBuilder.Entity<ParkingService>().ToTable("ParkingServices");
+            modelBuilder.Entity<DonationForm>().ToTable("DonationForms");
         }
     }
 }
