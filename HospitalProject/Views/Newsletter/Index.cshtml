@@ -1,0 +1,59 @@
+﻿@model IEnumerable<HospitalProject.Models.newsletter.Newsletter>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.news_name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.date_created)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.news_content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.is_confirmed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserID)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.news_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date_created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.news_content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_confirmed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.news_ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.news_ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.news_ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

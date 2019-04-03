@@ -8,9 +8,13 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Security.Claims;
 using HospitalProject.Models;
 using HospitalProject.Data;
+using HospitalProject.Models.GiftShop;
+using HospitalProject.Models.newsletter;
+using HospitalProject.Models.Events;
 using HospitalProject.Models.JobModels;
 using HospitalProject.Models.DonationModels;
 using HospitalProject.Models.MVPModels;
+
 
 namespace HospitalProject.Data
 {
@@ -32,6 +36,12 @@ namespace HospitalProject.Data
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<DonationForm> DonationForms { get; set; }
         public DbSet<Donation> Donations { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Billing> Billings { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
+        public DbSet<Event> Events { get; set; }
+     
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Medicalservice> Medicalservices { get; set; }
