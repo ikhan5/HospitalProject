@@ -32,6 +32,9 @@ namespace HospitalProject.Data
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<DonationForm> DonationForms { get; set; }
         public DbSet<Donation> Donations { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Clinic> Clinics { get; set; }
+        public DbSet<Medicalservice> Medicalservices { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Rating> Ratings { get; set; }
