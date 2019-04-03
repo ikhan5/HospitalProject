@@ -25,10 +25,14 @@ namespace HospitalProject.Controllers
     public class ParkingServiceController : Controller
     {
         private readonly HospitalCMSContext db;
+        private readonly IHostingEnvironment _env;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ParkingServiceController(HospitalCMSContext context)
+        public ParkingServiceController(HospitalCMSContext context, IHostingEnvironment env, UserManager<ApplicationUser> usermanager)
         {
             db = context;
+            _env = env;       
+            _userManager = usermanager;
         }
 
         public async Task<IActionResult> Index()
