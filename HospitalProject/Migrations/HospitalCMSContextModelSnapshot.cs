@@ -110,6 +110,92 @@ namespace HospitalProject.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("HospitalProject.Models.Department", b =>
+                {
+                    b.Property<int>("DepartmentID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("DoctorID");
+
+                    b.HasKey("DepartmentID");
+
+                    b.HasIndex("DoctorID")
+                        .IsUnique();
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.Doctor", b =>
+                {
+                    b.Property<int>("DoctorID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DoctorName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("DoctorID");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.Donation", b =>
+                {
+                    b.Property<int>("donationID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("donationFormID");
+
+                    b.Property<string>("donorEmail")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("donorName")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("isRecurring");
+
+                    b.Property<int>("paymentAmount");
+
+                    b.Property<int>("paymentMethod");
+
+                    b.HasKey("donationID");
+
+                    b.HasIndex("donationFormID");
+
+                    b.ToTable("Donations");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.DonationForm", b =>
+                {
+                    b.Property<int>("donationFormID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("charityName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("donationCause")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("donationGoal");
+
+                    b.Property<string>("formDescription")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<string>("presetAmounts")
+                        .HasMaxLength(255);
+
+                    b.HasKey("donationFormID");
+
+                    b.ToTable("DonationForms");
+                });
+
             modelBuilder.Entity("HospitalProject.Models.EmergencyWaitTime", b =>
                 {
                     b.Property<int>("EmergencyWaitTimeID")
@@ -126,6 +212,109 @@ namespace HospitalProject.Migrations
                     b.HasKey("EmergencyWaitTimeID");
 
                     b.ToTable("EmergencyWaitTimes");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.JobApplication", b =>
+                {
+                    b.Property<int>("jobApplicationID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("applicantEmail")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<string>("applicantName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("applicationDate");
+
+                    b.Property<int>("jobPostingID");
+
+                    b.HasKey("jobApplicationID");
+
+                    b.HasIndex("jobPostingID");
+
+                    b.ToTable("JobApplications");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.JobPosting", b =>
+                {
+                    b.Property<int>("jobPostingID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("jobDescription")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<DateTime>("jobExpiryDate");
+
+                    b.Property<DateTime>("jobPostingDate");
+
+                    b.Property<string>("jobQualifications")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<string>("jobSkills")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<string>("jobTitle")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("jobPostingID");
+
+                    b.ToTable("JobPostings");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.Navigation", b =>
+                {
+                    b.Property<int>("navigationID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("navigationName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("navigationPosition");
+
+                    b.Property<string>("navigationURL")
+                        .HasMaxLength(255);
+
+                    b.HasKey("navigationID");
+
+                    b.ToTable("Navigations");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.Page", b =>
+                {
+                    b.Property<int>("pageID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("dateCreated");
+
+                    b.Property<string>("jobSkills")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<DateTime>("lastModified");
+
+                    b.Property<int>("navigationID");
+
+                    b.Property<string>("pageAuthor")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("pageContent")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<int>("pageOrder");
+
+                    b.Property<string>("pageTitle")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("pageID");
+
+                    b.HasIndex("navigationID");
+
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("HospitalProject.Models.ParkingService", b =>
@@ -170,6 +359,41 @@ namespace HospitalProject.Migrations
                     b.HasKey("PlanYourStayID");
 
                     b.ToTable("PlanYourStays");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.Question", b =>
+                {
+                    b.Property<int>("QuestionID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AnswerList")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("QuestionList")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("QuestionID");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.Rating", b =>
+                {
+                    b.Property<int>("RatingID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("DoctorID");
+
+                    b.Property<string>("Feedback")
+                        .HasMaxLength(2147483647);
+
+                    b.HasKey("RatingID");
+
+                    b.HasIndex("DoctorID");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -295,6 +519,14 @@ namespace HospitalProject.Migrations
                         .HasForeignKey("HospitalProject.Models.ApplicationUser", "PlanYourStayID");
                 });
 
+            modelBuilder.Entity("HospitalProject.Models.Department", b =>
+                {
+                    b.HasOne("HospitalProject.Models.Doctor", "Doctors")
+                        .WithOne("Departments")
+                        .HasForeignKey("HospitalProject.Models.Department", "DoctorID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("HospitalProject.Models.Donation", b =>
                 {
                     b.HasOne("HospitalProject.Models.DonationForm", "DonationForm")
@@ -317,6 +549,13 @@ namespace HospitalProject.Migrations
                         .WithMany("Pages")
                         .HasForeignKey("navigationID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HospitalProject.Models.Rating", b =>
+                {
+                    b.HasOne("HospitalProject.Models.Doctor", "Doctors")
+                        .WithMany("Ratings")
+                        .HasForeignKey("DoctorID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
