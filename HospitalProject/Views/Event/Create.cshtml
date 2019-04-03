@@ -1,0 +1,48 @@
+﻿@model HospitalProject.Models.Events.Event
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Event</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="event_name" class="control-label"></label>
+                <input asp-for="event_name" class="form-control" />
+                <span asp-validation-for="event_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="event_date" class="control-label"></label>
+                <input asp-for="event_date" class="form-control" />
+                <span asp-validation-for="event_date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="event_descp" class="control-label"></label>
+                <input asp-for="event_descp" class="form-control" />
+                <span asp-validation-for="event_descp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserID" class="control-label"></label>
+                <input asp-for="UserID" class="form-control" />
+                <span asp-validation-for="UserID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

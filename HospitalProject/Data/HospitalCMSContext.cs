@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Security.Claims;
 using HospitalProject.Models;
 using HospitalProject.Data;
+using HospitalProject.Models.GiftShop;
+using HospitalProject.Models.newsletter;
+using HospitalProject.Models.Events;
 
 namespace HospitalProject.Data
 {
@@ -29,7 +32,12 @@ namespace HospitalProject.Data
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<DonationForm> DonationForms { get; set; }
         public DbSet<Donation> Donations { get; set; }
-
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Billing> Billings { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
+        public DbSet<Event> Events { get; set; }
+     
 
         //I need the code which actually makes this into a table.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
