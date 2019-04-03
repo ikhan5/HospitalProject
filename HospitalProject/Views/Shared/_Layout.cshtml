@@ -30,12 +30,38 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="EmergencyWaitTime" asp-action="Index">Emergency Wait Time</a></li>
                     <li><a asp-area="" asp-controller="ParkingService" asp-action="Index">Parking Service</a></li>
                     <li><a asp-area="" asp-controller="PlanYourStay" asp-action="Index">Plan your Stay</a></li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Jobs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-area="" asp-controller="JobApplication" asp-action="Index">Job Applications</a> <br/>
+                            <a class="dropdown-item" asp-area="" asp-controller="JobPosting" asp-action="Index">Job Postings</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Donations
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a asp-area="" asp-controller="Donation" asp-action="Index">Donations</a><br />
+                            <a asp-area="" asp-controller="DonationForm" asp-action="Index">Donation Forms</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Site
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a asp-area="" asp-controller="Page" asp-action="Index">Pages</a><br />
+                            <a asp-area="" asp-controller="Navigation" asp-action="Index">Navigation</a>
+                        </div>
+                    </li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace HospitalProject.Models
+
+namespace HospitalProject.Models.JobModels
 {
     public class JobPosting
     {
@@ -24,10 +25,10 @@ namespace HospitalProject.Models
         [StringLength(int.MaxValue), Display(Name = "Required Skill")]
         public string jobSkills { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date), Display(Name = "Posting Date")]
         public DateTime jobPostingDate { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date), Display(Name = "Expires")]
         public DateTime jobExpiryDate { get; set; }
 
         //One Job Posting will have many Job Applications
