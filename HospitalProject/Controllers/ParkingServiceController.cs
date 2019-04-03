@@ -40,7 +40,7 @@ namespace HospitalProject.Controllers
             return View(await db.ParkingServices.ToListAsync());
         }
 
-        // GET: Authors/Create
+        // GET: ParkingService/Create
         public ActionResult Create()
         {
             return View();

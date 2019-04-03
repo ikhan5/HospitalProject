@@ -30,38 +30,79 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="EmergencyWaitTime" asp-action="Index">Emergency Wait Time</a></li>
-                    <li><a asp-area="" asp-controller="ParkingService" asp-action="Index">Parking Service</a></li>
-                    <li><a asp-area="" asp-controller="PlanYourStay" asp-action="Index">Plan your Stay</a></li>
-
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Jobs
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Kenneth
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-area="" asp-controller="JobApplication" asp-action="Index">Job Applications</a> <br/>
-                            <a class="dropdown-item" asp-area="" asp-controller="JobPosting" asp-action="Index">Job Postings</a>
+                            <a asp-area="" asp-controller="EmergencyWaitTime" asp-action="Index">Emergency Wait Time</a><br />
+                            <a asp-area="" asp-controller="ParkingService" asp-action="Index">Parking Service</a><br />
+                            <a asp-area="" asp-controller="PlanYourStay" asp-action="Index">Plan your Stay</a>
                         </div>
                     </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Donations
+                            Jennifer
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a asp-area="" asp-controller="VolunteerPost" asp-action="Index">Volunteer Posts</a><br />
+                            <a asp-area="" asp-controller="VolunteerApp" asp-action="Index">Volunteer Applications</a><br />
+                            <a asp-area="" asp-controller="ReferAPatient" asp-action="Index">Patient Referral</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Reina
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a asp-area="" asp-controller="Appointment" asp-action="Index">Appointments</a><br />
+                            <a asp-area="" asp-controller="Clinic" asp-action="Index">Clinics</a><br />
+                            <a asp-area="" asp-controller="Medicalservice" asp-action="Index">Medical Services</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Binita
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a asp-area="" asp-controller="Doctor" asp-action="Index">Doctors</a><br />
+                            <a asp-area="" asp-controller="Department" asp-action="Index">Departments</a><br />
+                            <a asp-area="" asp-controller="Rating" asp-action="Index">Ratings</a> <br />
+                            <a asp-area="" asp-controller="Question" asp-action="Index">Questions</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Imzan
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a asp-area="" asp-controller="Donation" asp-action="Index">Donations</a><br />
-                            <a asp-area="" asp-controller="DonationForm" asp-action="Index">Donation Forms</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Site
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a asp-area="" asp-controller="DonationForm" asp-action="Index">Donation Forms</a><br />
+                            <a asp-area="" asp-controller="JobApplication" asp-action="Index">Job Applications</a> <br />
+                            <a asp-area="" asp-controller="JobPosting" asp-action="Index">Job Postings</a><br />
                             <a asp-area="" asp-controller="Page" asp-action="Index">Pages</a><br />
                             <a asp-area="" asp-controller="Navigation" asp-action="Index">Navigation</a>
                         </div>
                     </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Parul
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a asp-area="" asp-controller="Cart" asp-action="Index">Carts</a><br />
+                            <a asp-area="" asp-controller="Item" asp-action="Index">Items</a><br />
+                            <a asp-area="" asp-controller="Billing" asp-action="Index">Billings</a> <br />
+                            <a asp-area="" asp-controller="" asp-action="Index"></a><br />
+                            <a asp-area="" asp-controller="" asp-action="Index"></a><br />
+                            <a asp-area="" asp-controller="" asp-action="Index"></a>
+                        </div>
+                    </li>
+
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

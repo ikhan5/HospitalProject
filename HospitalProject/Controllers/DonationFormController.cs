@@ -37,7 +37,7 @@ namespace HospitalProject.Controllers
             return View(await db.DonationForms.ToListAsync());
         }
 
-        // GET: Donations/Create
+        // GET: DonationForms/Create
         public ActionResult Create()
         {
             return View();

@@ -35,7 +35,7 @@ namespace HospitalProject.Controllers
         {
             return View(await db.Doctors.ToListAsync());
         }
-        // GET: Authors/Create
+        // GET: Doctors/Create
         public ActionResult Create()
         {
             return View();

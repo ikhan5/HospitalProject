@@ -37,7 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Models\VolunteerModels\" />
+    <Folder Include="Wireframes\Parul\" />
   </ItemGroup>
 
 </Project>

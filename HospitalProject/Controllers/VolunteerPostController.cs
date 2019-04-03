@@ -36,7 +36,7 @@ namespace HospitalProject.Controllers
             return View(await db.VolunteerPosts.ToListAsync());
         }
 
-        // GET: Authors/Create
+        // GET: VolunteerPost/Create
         public ActionResult Create()
         {
             return View();
