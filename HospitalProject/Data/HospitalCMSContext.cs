@@ -21,7 +21,7 @@ namespace HospitalProject.Data
         {
 
         }
-  
+
         public DbSet<Admin> Admins { get; set; }
         public DbSet<EmergencyWaitTime> EmergencyWaitTimes { get; set; }
         public DbSet<PlanYourStay> PlanYourStays { get; set; }
