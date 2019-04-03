@@ -32,7 +32,10 @@ namespace HospitalProject.Data
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<DonationForm> DonationForms { get; set; }
         public DbSet<Donation> Donations { get; set; }
-
+        public DbSet<VolunteerPost> VolunteerPosts { get; set; }
+        public DbSet<VolunteerApplication> VolunteerApplications { get; set; }
+        public DbSet<ReferAPatient> ReferAPatients { get; set; }
+        
 
         //I need the code which actually makes this into a table.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
