@@ -32,6 +32,10 @@ namespace HospitalProject.Data
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<DonationForm> DonationForms { get; set; }
         public DbSet<Donation> Donations { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Question> Questions { get; set; }
         public DbSet<VolunteerPost> VolunteerPosts { get; set; }
         public DbSet<VolunteerApplication> VolunteerApplications { get; set; }
         public DbSet<ReferAPatient> ReferAPatients { get; set; }
@@ -46,7 +50,12 @@ namespace HospitalProject.Data
             modelBuilder.Entity<EmergencyWaitTime>().ToTable("EmergencyWaitTimes");
             modelBuilder.Entity<PlanYourStay>().ToTable("PlanYourStays");
             modelBuilder.Entity<ParkingService>().ToTable("ParkingServices");
+
+            modelBuilder.Entity<Department>().ToTable("Departments");
+            modelBuilder.Entity<Rating>().ToTable("Ratings");
+            modelBuilder.Entity<Question>().ToTable("Questions");
             modelBuilder.Entity<DonationForm>().ToTable("DonationForms");
+
         }
     }
 }
