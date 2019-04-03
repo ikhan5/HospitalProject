@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Security.Claims;
 using HospitalProject.Models;
 using HospitalProject.Data;
+using HospitalProject.Models.JobModels;
+using HospitalProject.Models.DonationModels;
+using HospitalProject.Models.MVPModels;
 
 namespace HospitalProject.Data
 {
@@ -32,7 +35,14 @@ namespace HospitalProject.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Medicalservice> Medicalservices { get; set; }
-
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<VolunteerPost> VolunteerPosts { get; set; }
+        public DbSet<VolunteerApplication> VolunteerApplications { get; set; }
+        public DbSet<ReferAPatient> ReferAPatients { get; set; }
+        
 
         //I need the code which actually makes this into a table.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,6 +53,12 @@ namespace HospitalProject.Data
             modelBuilder.Entity<EmergencyWaitTime>().ToTable("EmergencyWaitTimes");
             modelBuilder.Entity<PlanYourStay>().ToTable("PlanYourStays");
             modelBuilder.Entity<ParkingService>().ToTable("ParkingServices");
+
+            modelBuilder.Entity<Department>().ToTable("Departments");
+            modelBuilder.Entity<Rating>().ToTable("Ratings");
+            modelBuilder.Entity<Question>().ToTable("Questions");
+            modelBuilder.Entity<DonationForm>().ToTable("DonationForms");
+
         }
     }
 }
