@@ -29,6 +29,9 @@ namespace HospitalProject.Data
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<DonationForm> DonationForms { get; set; }
         public DbSet<Donation> Donations { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Clinic> Clinics { get; set; }
+        public DbSet<Medicalservice> Medicalservices { get; set; }
 
 
         //I need the code which actually makes this into a table.

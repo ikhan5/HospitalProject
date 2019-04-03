@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace HospitalProject.Migrations
 {
-    public partial class intitial : Migration
+    public partial class reinafeature : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,25 @@ namespace HospitalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    client_id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    appointment_details = table.Column<string>(maxLength: 255, nullable: false),
+                    client_doctor_id = table.Column<string>(maxLength: 255, nullable: false),
+                    client_emailadd = table.Column<string>(maxLength: 255, nullable: false),
+                    client_fname = table.Column<string>(maxLength: 255, nullable: false),
+                    client_lname = table.Column<string>(maxLength: 255, nullable: false),
+                    client_phone = table.Column<string>(maxLength: 255, nullable: false),
+                    date_time = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.client_id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -40,6 +59,40 @@ namespace HospitalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Clinics",
+                columns: table => new
+                {
+                    clinic_id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    clinic_description = table.Column<string>(maxLength: 255, nullable: false),
+                    clinic_location = table.Column<string>(maxLength: 255, nullable: false),
+                    clinic_name = table.Column<string>(maxLength: 255, nullable: false),
+                    clinic_phone = table.Column<string>(nullable: true),
+                    clinic_services = table.Column<string>(maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clinics", x => x.clinic_id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DonationForms",
+                columns: table => new
+                {
+                    donationFormID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    charityName = table.Column<string>(maxLength: 255, nullable: false),
+                    donationCause = table.Column<string>(maxLength: 255, nullable: false),
+                    donationGoal = table.Column<int>(nullable: false),
+                    formDescription = table.Column<string>(maxLength: 2147483647, nullable: true),
+                    presetAmounts = table.Column<string>(maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DonationForms", x => x.donationFormID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmergencyWaitTimes",
                 columns: table => new
                 {
@@ -51,6 +104,54 @@ namespace HospitalProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EmergencyWaitTimes", x => x.EmergencyWaitTimeID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobPostings",
+                columns: table => new
+                {
+                    jobPostingID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    jobDescription = table.Column<string>(maxLength: 2147483647, nullable: true),
+                    jobExpiryDate = table.Column<DateTime>(nullable: false),
+                    jobPostingDate = table.Column<DateTime>(nullable: false),
+                    jobQualifications = table.Column<string>(maxLength: 2147483647, nullable: true),
+                    jobSkills = table.Column<string>(maxLength: 2147483647, nullable: true),
+                    jobTitle = table.Column<string>(maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobPostings", x => x.jobPostingID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Medicalservices",
+                columns: table => new
+                {
+                    medical_services_id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    medical_service_type = table.Column<int>(nullable: false),
+                    medical_services_description = table.Column<string>(maxLength: 255, nullable: false),
+                    medical_services_name = table.Column<string>(maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medicalservices", x => x.medical_services_id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Navigations",
+                columns: table => new
+                {
+                    navigationID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    navigationName = table.Column<string>(maxLength: 255, nullable: false),
+                    navigationPosition = table.Column<int>(nullable: false),
+                    navigationURL = table.Column<string>(maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Navigations", x => x.navigationID);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,6 +204,78 @@ namespace HospitalProject.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Donations",
+                columns: table => new
+                {
+                    donationID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    donationFormID = table.Column<int>(nullable: false),
+                    donorEmail = table.Column<string>(maxLength: 255, nullable: false),
+                    donorName = table.Column<string>(maxLength: 255, nullable: true),
+                    isRecurring = table.Column<int>(nullable: false),
+                    paymentAmount = table.Column<int>(nullable: false),
+                    paymentMethod = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Donations", x => x.donationID);
+                    table.ForeignKey(
+                        name: "FK_Donations_DonationForms_donationFormID",
+                        column: x => x.donationFormID,
+                        principalTable: "DonationForms",
+                        principalColumn: "donationFormID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobApplications",
+                columns: table => new
+                {
+                    jobApplicationID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    applicantEmail = table.Column<string>(maxLength: 2147483647, nullable: true),
+                    applicantName = table.Column<string>(maxLength: 255, nullable: false),
+                    applicationDate = table.Column<DateTime>(nullable: false),
+                    jobPostingID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplications", x => x.jobApplicationID);
+                    table.ForeignKey(
+                        name: "FK_JobApplications_JobPostings_jobPostingID",
+                        column: x => x.jobPostingID,
+                        principalTable: "JobPostings",
+                        principalColumn: "jobPostingID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pages",
+                columns: table => new
+                {
+                    pageID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    dateCreated = table.Column<DateTime>(nullable: false),
+                    jobSkills = table.Column<string>(maxLength: 2147483647, nullable: true),
+                    lastModified = table.Column<DateTime>(nullable: false),
+                    navigationID = table.Column<int>(nullable: false),
+                    pageAuthor = table.Column<string>(maxLength: 255, nullable: false),
+                    pageContent = table.Column<string>(maxLength: 2147483647, nullable: true),
+                    pageOrder = table.Column<int>(nullable: false),
+                    pageTitle = table.Column<string>(maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pages", x => x.pageID);
+                    table.ForeignKey(
+                        name: "FK_Pages_Navigations_navigationID",
+                        column: x => x.navigationID,
+                        principalTable: "Navigations",
+                        principalColumn: "navigationID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -296,10 +469,28 @@ namespace HospitalProject.Migrations
                 column: "PlanYourStayID",
                 unique: true,
                 filter: "[PlanYourStayID] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Donations_donationFormID",
+                table: "Donations",
+                column: "donationFormID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_jobPostingID",
+                table: "JobApplications",
+                column: "jobPostingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pages_navigationID",
+                table: "Pages",
+                column: "navigationID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Appointments");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -316,13 +507,37 @@ namespace HospitalProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Clinics");
+
+            migrationBuilder.DropTable(
+                name: "Donations");
+
+            migrationBuilder.DropTable(
                 name: "EmergencyWaitTimes");
+
+            migrationBuilder.DropTable(
+                name: "JobApplications");
+
+            migrationBuilder.DropTable(
+                name: "Medicalservices");
+
+            migrationBuilder.DropTable(
+                name: "Pages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "DonationForms");
+
+            migrationBuilder.DropTable(
+                name: "JobPostings");
+
+            migrationBuilder.DropTable(
+                name: "Navigations");
 
             migrationBuilder.DropTable(
                 name: "Admins");
