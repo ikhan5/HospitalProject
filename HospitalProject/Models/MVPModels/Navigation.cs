@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HospitalProject.Models
+namespace HospitalProject.Models.MVPModels
 {
     public class Navigation
     {

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HospitalProject.Models
+namespace HospitalProject.Models.JobModels
 {
     public class JobApplication
     {
@@ -19,11 +19,11 @@ namespace HospitalProject.Models
         [StringLength(int.MaxValue), Display(Name = "Email")]
         public string applicantEmail { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date), Display(Name ="Application Date")]
         public DateTime applicationDate { get; set; }
 
         //Each Job Application has a Job Posting ID
-        [ForeignKey("jobPostingID")]
+        [ForeignKey("jobPostingID"), Display(Name = "Applying For:")]
         public int jobPostingID { get; set; }
         // Job Application belongs to a Job Posting
         public virtual JobPosting JobPosting { get; set; }
