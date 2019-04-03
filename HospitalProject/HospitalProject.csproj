@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\VolunteerModels\**" />
+    <Content Remove="Models\VolunteerModels\**" />
+    <EmbeddedResource Remove="Models\VolunteerModels\**" />
+    <None Remove="Models\VolunteerModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20190322173118_HospitalProject.cs" />
     <Compile Remove="Migrations\20190322173118_HospitalProject.Designer.cs" />
     <Compile Remove="Migrations\20190328223010_Initial.cs" />
@@ -34,6 +41,10 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Wireframes\Parul\" />
   </ItemGroup>
 
 </Project>

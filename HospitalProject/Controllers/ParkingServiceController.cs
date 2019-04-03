@@ -25,10 +25,14 @@ namespace HospitalProject.Controllers
     public class ParkingServiceController : Controller
     {
         private readonly HospitalCMSContext db;
+        private readonly IHostingEnvironment _env;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ParkingServiceController(HospitalCMSContext context)
+        public ParkingServiceController(HospitalCMSContext context, IHostingEnvironment env, UserManager<ApplicationUser> usermanager)
         {
             db = context;
+            _env = env;       
+            _userManager = usermanager;
         }
 
         public async Task<IActionResult> Index()
@@ -36,7 +40,7 @@ namespace HospitalProject.Controllers
             return View(await db.ParkingServices.ToListAsync());
         }
 
-        // GET: Authors/Create
+        // GET: ParkingService/Create
         public ActionResult Create()
         {
             return View();
