@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>List of Patient Referrals</h2>
+<h2>Patient Referral</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add</a>
 </p>
 <table class="table">
     <thead>
@@ -19,43 +19,13 @@
                     @Html.DisplayNameFor(model => model.PatName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DOB)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OHIP)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PatAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PatPhone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PatEmail)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.ProgReq)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CurrPrimDiag)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MedHist)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ServiceReq)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ReferFac)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReferPhysName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReferPhysPhone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReferPhysEmail)
                 </th>
             <th></th>
         </tr>
@@ -70,47 +40,17 @@
                 @Html.DisplayFor(modelItem => item.PatName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OHIP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatEmail)
+                @Html.DisplayFor(modelItem => item.ReferFac)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProgReq)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CurrPrimDiag)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MedHist)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ServiceReq)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReferFac)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReferPhysName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReferPhysPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReferPhysEmail)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReferAPatientID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ReferAPatientID">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.ReferAPatientID">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@item.ReferAPatientID">Delete</a>
             </td>
         </tr>

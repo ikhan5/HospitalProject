@@ -1,0 +1,36 @@
+﻿@model HospitalProject.Models.Medicalservice
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Medicalservice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.medical_services_name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.medical_services_name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.medical_services_description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.medical_services_description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.medical_service_type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.medical_service_type)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.medical_services_id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

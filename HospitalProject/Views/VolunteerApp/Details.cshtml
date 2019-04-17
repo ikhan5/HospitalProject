@@ -1,0 +1,66 @@
+﻿@model HospitalProject.Models.VolunteerApplication
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VolunteerApplication</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppFName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppFName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppLName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppLName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descriptions)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descriptions)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VolunteerPosts)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VolunteerPosts.Department)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VolunteerAppID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
