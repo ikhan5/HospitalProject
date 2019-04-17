@@ -1,0 +1,63 @@
+﻿@model HospitalProject.Models.Appointment
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Appointment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.client_fname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.client_fname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.client_lname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.client_lname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.client_phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.client_phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.client_emailadd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.client_emailadd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.client_doctor_id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.client_doctor_id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.date_time)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.date_time)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.appointment_details)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.appointment_details)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="client_id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
