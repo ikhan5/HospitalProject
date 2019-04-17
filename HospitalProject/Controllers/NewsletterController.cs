@@ -33,10 +33,30 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index(int pagenum)
         {
-            return View(await db.Newsletters.ToListAsync());
+            // Pagination
+            var _newsletter = await db.Newsletters.ToListAsync();
+            int newsCount = _newsletter.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)newsCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<Newsletter> newsletter = await db.Newsletters.Skip(start).Take(perpage).ToListAsync();
+            return View(newsletter);
         }
+
 
 
         public ActionResult Create()
@@ -66,6 +86,99 @@ namespace HospitalProject.Controllers
                     "see your system administrator.");
             }
             return View(newsletter);
+        }
+        //edit
+        public ActionResult Edit(int? id)
+        {
+            if ((id == null) || (db.Newsletters.Find(id) == null))
+            {
+                return NotFound();
+            }
+            string query = "select * from Newsletters where news_ID=@id";
+            SqlParameter param = new SqlParameter("@id", id);
+            Newsletter mynewsletter = db.Newsletters.FromSql(query, param).FirstOrDefault();
+            return View(mynewsletter);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int? id, string date_created, string is_confirmed, string news_content, string news_name)
+        {
+            if ((id == null) || (db.Newsletters.Find(id) == null))
+            {
+                return NotFound();
+            }
+            string query = "update Newsletters set date_created=@date, is_confirmed=@confirm, news_content=@content,news_name=@newsname  " +
+                
+            " where news_ID=@id";
+            SqlParameter[] myparams = new SqlParameter[5];
+            myparams[0] = new SqlParameter("@date", date_created);
+            myparams[1] = new SqlParameter("@confirm", is_confirmed);
+            myparams[2] = new SqlParameter("@content", news_content);
+            myparams[3] = new SqlParameter("@newsname", news_name);
+            myparams[4] = new SqlParameter("@id", id);
+
+            db.Database.ExecuteSqlCommand(query, myparams);
+
+            return RedirectToAction("Index");
+        }
+        //details
+
+
+        public async Task<ActionResult> Details(int id)
+        {
+            if (db.Newsletters.Find(id) == null)
+            {
+                return NotFound();
+            }
+
+            Newsletter newslttr = await db.Newsletters.SingleOrDefaultAsync(d => d.news_ID == id);
+            return View(newslttr);
+        }
+
+        //delete
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Newsletter donform = db.Newsletters.Find(id);
+            if (donform == null)
+            {
+                return NotFound();
+            }
+
+            return View(donform);
+        }
+
+        // POST: Authors/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Newsletter nl = await db.Newsletters.FindAsync(id);
+
+            if (nl.news_ID != id)
+            {
+                return Forbid();
+            }
+
+            db.Newsletters.Remove(nl);
+            await db.SaveChangesAsync();
+            /*	SqlParameter donparam = new SqlParameter("@id", id);
+            	string deleteQuery = "delete from DonationForms where donationFormID=@id";
+            	await db.Database.ExecuteSqlCommandAsync(deleteQuery, donparam);*/
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
