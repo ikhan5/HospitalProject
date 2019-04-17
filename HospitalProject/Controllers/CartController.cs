@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using HospitalProject.Models.GiftShop;
+using HospitalProject.Models.GiftShop.ViewModel;
 
 namespace HospitalProject.Controllers
 {
@@ -40,30 +41,27 @@ namespace HospitalProject.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            BillingList bl = new BillingList();
+            bl.billings = db.Billings.ToList();
+            
+            return View(bl);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-        [Bind("CartID, Paymentmethods, Total")] Cart cart)
+        public async Task<ActionResult> Create(int Total, string Paymentmethod, int Billingid)
         {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Add(cart);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
-            }
-            return View(cart);
+            string query = "insert into Carts (BillingID, Paymentmethods, Total )" +
+                "values (@billingid, @methods, @total)";
+
+            SqlParameter[] billparam = new SqlParameter[3];
+            billparam[0] = new SqlParameter("@billingid", Billingid);
+            billparam[1] = new SqlParameter("@methods", Paymentmethod);
+            billparam[2] = new SqlParameter("@total", Total);
+            db.Database.ExecuteSqlCommand(query, billparam);
+            Debug.Write(query);
+            return RedirectToAction("Index");
+
         }
     }
 }

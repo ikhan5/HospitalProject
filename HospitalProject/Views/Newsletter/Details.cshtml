@@ -1,0 +1,48 @@
+﻿@model HospitalProject.Models.newsletter.Newsletter
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Newsletter</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.news_name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.news_name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.date_created)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.date_created)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.news_content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.news_content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.is_confirmed)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.is_confirmed)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.news_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

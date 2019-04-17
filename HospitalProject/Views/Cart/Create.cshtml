@@ -1,4 +1,4 @@
-﻿@model HospitalProject.Models.GiftShop.Cart
+﻿@model HospitalProject.Models.GiftShop.ViewModel.BillingList
 
 @{
     ViewData["Title"] = "Create";
@@ -13,18 +13,25 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" />
-                <span asp-validation-for="Total" class="text-danger"></span>
+                <label asp-for="@Model.cart.Total" class="control-label"></label>
+                <input name= "Total" asp-for="@Model.cart.Total" class="form-control" />
+                <span asp-validation-for="@Model.cart.Total" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Paymentmethods" class="control-label"></label>
-                <input asp-for="Paymentmethods" class="form-control" />
-                <span asp-validation-for="Paymentmethods" class="text-danger"></span>
+                <label asp-for="@Model.cart.Paymentmethods" class="control-label"></label>
+                <input name= "Paymentmethod" asp-for="@Model.cart.Paymentmethods" class="form-control" />
+                <span asp-validation-for="@Model.cart.Paymentmethods" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BillingID" class="control-label"></label>
-                <select asp-for="BillingID" class ="form-control" asp-items="ViewBag.BillingID"></select>
+                <label for ="Billingid" class="control-label"></label>
+                <select name="Billingid" class ="form-control">
+                 
+                    @foreach(var billing in Model.billings)
+                    {
+                    <option value="@billing.BillingID">@billing.BillingID</option>
+                    }
+
+</select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
