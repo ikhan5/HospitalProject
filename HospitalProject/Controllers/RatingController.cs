@@ -65,10 +65,6 @@ namespace HospitalProject.Controllers
 
         public ActionResult Create()
         {
-            DoctorsList doctorlist = new BlogEdit();
-
-            //GOTO Views/Blog/New.cshtml
-            return View(blogeditview);
             return View();
         }
 
