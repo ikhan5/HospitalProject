@@ -1,0 +1,51 @@
+﻿@model HospitalProject.Models.Clinic
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Clinic</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.clinic_name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clinic_name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clinic_description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clinic_description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clinic_services)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clinic_services)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clinic_phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clinic_phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clinic_location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clinic_location)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="clinic_id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
