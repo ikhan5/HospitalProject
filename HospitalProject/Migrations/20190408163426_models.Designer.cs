@@ -13,8 +13,8 @@ using System;
 namespace HospitalProject.Migrations
 {
     [DbContext(typeof(HospitalCMSContext))]
-    [Migration("20190403225559_test")]
-    partial class test
+    [Migration("20190408163426_models")]
+    partial class models
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,29 +177,18 @@ namespace HospitalProject.Migrations
                     b.ToTable("Clinics");
                 });
 
-            modelBuilder.Entity("HospitalProject.Models.Department", b =>
-                {
-                    b.Property<int>("DepartmentID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<int>("DoctorID");
-
-                    b.HasKey("DepartmentID");
-
-                    b.HasIndex("DoctorID")
-                        .IsUnique();
-
-                    b.ToTable("Departments");
-                });
-
             modelBuilder.Entity("HospitalProject.Models.Doctor", b =>
                 {
                     b.Property<int>("DoctorID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DoctorDepartment")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("DoctorDescription")
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.Property<string>("DoctorName")
                         .IsRequired()
@@ -852,14 +841,6 @@ namespace HospitalProject.Migrations
                     b.HasOne("HospitalProject.Models.PlanYourStay")
                         .WithOne("user")
                         .HasForeignKey("HospitalProject.Models.ApplicationUser", "PlanYourStayID");
-                });
-
-            modelBuilder.Entity("HospitalProject.Models.Department", b =>
-                {
-                    b.HasOne("HospitalProject.Models.Doctor", "Doctors")
-                        .WithOne("Departments")
-                        .HasForeignKey("HospitalProject.Models.Department", "DoctorID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("HospitalProject.Models.DonationModels.Donation", b =>

@@ -19,9 +19,17 @@ namespace HospitalProject.Models
         [Required, StringLength(255), Display(Name = "Name")]
         public string DoctorName { get; set; }
 
+        //doctor department
+        [Required, StringLength(255), Display(Name = "Department")]
+        public string DoctorDepartment { get; set; }
+
+        //doctor description
+        [Required, StringLength(255), Display(Name = "Description")]
+        public string DoctorDescription { get; set; }
+
         //One doctor has one department 
-        [InverseProperty("Doctors")]
-        public virtual Department Departments { get; set; }
+       // [InverseProperty("Doctors")]
+       // public virtual Department Departments { get; set; }
 
         //One doctor has many ratings
          [InverseProperty("Doctors")]

@@ -19,6 +19,9 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using HospitalProject.Models.ViewModels;
+//using HospitalProject.ViewModels.DoctorsList;
+//using HospitalProject.Data;
 
 namespace HospitalProject.Controllers
 {
@@ -31,20 +34,48 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        //list
+
+        public async Task<ActionResult> Index(int pagenum)
         {
-            return View(await db.Ratings.ToListAsync());
+        // Pagination
+            var _ratings = await db.Ratings.ToListAsync();
+            int ratingCount = _ratings.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)ratingCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<Rating> ratings = await db.Ratings.Skip(start).Take(perpage).ToListAsync();
+            return View(ratings);
         }
-        // GET: Ratings/Create
+
+        
+        //create
+
         public ActionResult Create()
         {
+            DoctorsList doctorlist = new BlogEdit();
+
+            //GOTO Views/Blog/New.cshtml
+            return View(blogeditview);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-        [Bind("DoctorID, Feedback")] Rating rating)
+        [Bind("RatingID,DoctorID,Feedback")] Rating rating)
         {
             try
             {
@@ -63,5 +94,12 @@ namespace HospitalProject.Controllers
             }
             return View(rating);
         }
+
+        //update
+
+        //edit
+
+        //delete
+
     }
 }
