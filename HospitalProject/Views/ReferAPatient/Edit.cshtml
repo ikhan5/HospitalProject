@@ -1,16 +1,18 @@
 ﻿@model HospitalProject.Models.ReferAPatient
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Refer A Patient</h2>
+<h2>Patient Referral</h2>
 
+<h4>Edit</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ReferAPatientID" />
             <div class="form-group">
                 <label asp-for="ReferalDate" class="control-label"></label>
                 <input asp-for="ReferalDate" class="form-control" />
@@ -87,7 +89,7 @@
                 <span asp-validation-for="ReferPhysEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>

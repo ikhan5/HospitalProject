@@ -31,9 +31,28 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index(int pagenum)
         {
-            return View(await db.VolunteerPosts.ToListAsync());
+            // Pagination
+            var _posts = await db.VolunteerPosts.ToListAsync();
+            int postCount = _posts.Count();
+            int perpage = 10;
+            int maxpage = (int)Math.Ceiling((decimal)postCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<VolunteerPost> posts = await db.VolunteerPosts.Skip(start).Take(perpage).ToListAsync();
+            return View(posts);
         }
 
         // GET: VolunteerPost/Create
@@ -64,5 +83,95 @@ namespace HospitalProject.Controllers
             }
             return View(volunteerpost);
         }
+
+        // edit post
+        public ActionResult Edit(int? id)
+        {
+            if ((id == null) || (db.VolunteerPosts.Find(id) == null))
+            {
+                return NotFound();
+            }
+            string query = "select * from VolunteerPosts where VolunteerPostID=@id";
+            SqlParameter param = new SqlParameter("@id", id);
+            VolunteerPost myvolunteerpost = db.VolunteerPosts.FromSql(query, param).FirstOrDefault();
+            return View(myvolunteerpost);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int? id, string Department, string Details, string Position, DateTime PostDate)
+        {
+            if ((id == null) || (db.VolunteerPosts.Find(id) == null))
+            {
+                return NotFound();
+            }
+            string query = "update VolunteerPosts set Department=@department, Details=@details, Position=@position" +
+                " where VolunteerPostID=@id";
+            SqlParameter[] myparams = new SqlParameter[4];
+            myparams[0] = new SqlParameter("@department", Department);
+            myparams[1] = new SqlParameter("@details", Details);
+            myparams[2] = new SqlParameter("@position", Position);
+            myparams[3] = new SqlParameter("@id", id);
+
+            db.Database.ExecuteSqlCommand(query, myparams);
+
+            return RedirectToAction("Index");
+        }
+
+        // details
+        public async Task<ActionResult> Details(int id)
+        {
+            if (db.VolunteerPosts.Find(id) == null)
+            {
+                return NotFound();
+            }
+
+            VolunteerPost volunteerpost = await db.VolunteerPosts.SingleOrDefaultAsync(d => d.VolunteerPostID == id);
+            return View(volunteerpost);
+        }
+
+
+        // delete
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            VolunteerPost donform = db.VolunteerPosts.Find(id);
+            if (donform == null)
+            {
+                return NotFound();
+            }
+
+            return View(donform);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            VolunteerPost volunteerpost = await db.VolunteerPosts.FindAsync(id);
+
+            if (volunteerpost.VolunteerPostID != id)
+            {
+                return Forbid();
+            }
+
+            db.VolunteerPosts.Remove(volunteerpost);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+
     }
 }

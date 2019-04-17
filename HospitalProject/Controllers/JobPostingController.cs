@@ -65,5 +65,7 @@ namespace HospitalProject.Controllers
             }
             return View(jobPosting);
         }
+
+
     }
 }
