@@ -1,0 +1,55 @@
+﻿@model HospitalProject.Models.DonationModels.ViewModels.DonationList
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DonationForm</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.donationCause)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.donationCause)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.charityName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.charityName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.donationGoal)
+        </dt>
+        <dd>
+            $@Html.DisplayFor(model => model.donationForm.donationGoal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.presetAmounts)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.presetAmounts)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.formDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.formDescription)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @foreach(var donations in Model.donations)
+    {
+        <p> @donations.donorName donated  $@donations.paymentAmount </p>
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.donationForm.donationFormID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

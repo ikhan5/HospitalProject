@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using HospitalProject.Models.DonationModels;
+using HospitalProject.Models.DonationModels.ViewModels;
 
 namespace HospitalProject.Controllers
 {
@@ -34,36 +35,125 @@ namespace HospitalProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await db.Donations.ToListAsync());
+            return View(await db.Donations.Include(d=>d.DonationForm).ToListAsync());
         }
 
         // GET: Donations/Create
         public ActionResult Create()
         {
-            return View();
+            DonationFormList dfl = new DonationFormList();
+            dfl.donationForms = db.DonationForms.ToList();
+            return View(dfl);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-        [Bind("donationID,donorName,donorEmail,isRecurring,paymentMethod,paymentAmount,donationFormID")] Donation donation)
+        public async Task<ActionResult> Create(string donorName,string donorEmail, string isRecurring, int paymentAmount, string paymentMethod, int donationFormID)
         {
-            try
+            string insertQuery = "insert into Donations (donorName, donorEmail, isRecurring, paymentAmount, paymentMethod, donationFormID) " +
+            "values (@name,@email,@recurring,@amount,@method, @formID)";
+            
+            SqlParameter[] donparams = new SqlParameter[6];
+            donparams[0] = new SqlParameter("@formID", donationFormID);
+            donparams[1] = new SqlParameter("@email", donorEmail);
+            donparams[2] = new SqlParameter("@recurring", isRecurring);
+            donparams[3] = new SqlParameter("@amount", paymentAmount);
+            donparams[4] = new SqlParameter("@method", paymentMethod);
+            donparams[5] = new SqlParameter("@name", donorName);
+
+            db.Database.ExecuteSqlCommand(insertQuery, donparams);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            //find donation form where 
+            DonationFormList dfl = new DonationFormList();
+            dfl.donation = db.Donations.Include(d => d.DonationForm)
+                           .SingleOrDefault(d => d.donationID == id);
+            dfl.donationForms = db.DonationForms.ToList();
+            if (dfl != null) return View(dfl);
+            else return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(int donationID, string donorEmail, int isRecurring, int paymentAmount, int paymentMethod, int donationFormID)
+        {
+            if (db.Donations.Find(donationID) == null)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Add(donation);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
+                return NotFound();
             }
-            catch (DbUpdateException)
+
+            string updateQuery = "update Donations set donorEmail=@email, isRecurring=@recurring, paymentAmount = @amount, paymentMethod =@method" +
+                " where donationID=@id AND donationFormID=@formID";
+            SqlParameter[] donparams = new SqlParameter[6];
+            donparams[0] = new SqlParameter("@id", donationID);
+            donparams[1] = new SqlParameter("@formID", donationFormID);
+            donparams[2] = new SqlParameter("@email", donorEmail);
+            donparams[3] = new SqlParameter("@recurring", isRecurring);
+            donparams[4] = new SqlParameter("@amount", paymentAmount);
+            donparams[5] = new SqlParameter("@method", paymentMethod);
+
+
+            db.Database.ExecuteSqlCommand(updateQuery, donparams);
+            return RedirectToAction("Details/" + donationID);
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            if (db.Donations.Find(id) == null)
             {
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
+                return NotFound();
             }
-            return View(donation);
+            DonationFormList dfl = new DonationFormList();
+            dfl.donation = db.Donations.Include(d => d.DonationForm)
+                           .SingleOrDefault(d => d.donationID == id);
+            dfl.donationForms = db.DonationForms.ToList();
+            return View(dfl);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            DonationFormList dfl = new DonationFormList();
+            dfl.donation = db.Donations.Include(d => d.DonationForm)
+                           .SingleOrDefault(d => d.donationID == id);
+            if (dfl == null)
+            {
+                return NotFound();
+            }
+
+            return View(dfl);
+        }
+
+        // POST: Authors/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Donation donation = await db.Donations.FindAsync(id);
+
+            if (donation.donationID != id)
+            {
+                return Forbid();
+            }
+
+            db.Donations.Remove(donation);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

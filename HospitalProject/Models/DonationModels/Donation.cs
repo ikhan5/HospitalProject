@@ -5,21 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace HospitalProject.Models.DonationModels
 {
-    public enum PaymentMethod
-    {
-        Credit,
-        PayPal
-    }
-
-    public enum Occurence
-    {
-        Once,
-        Month
-    }
-
     public class Donation
     {
         [Key]
@@ -32,10 +22,10 @@ namespace HospitalProject.Models.DonationModels
         public string donorEmail { get; set; }
 
         [Display(Name = "Donation Occurence")]
-        public Occurence isRecurring { get; set; }
+        public string isRecurring { get; set; }
 
         [Required(ErrorMessage = "Please select a Payment Method"), Display(Name = "Payment Method")]
-        public PaymentMethod paymentMethod { get; set; }
+        public string paymentMethod { get; set; }
 
         [Display(Name = "Donation Amount")]
         public int paymentAmount { get; set; }
