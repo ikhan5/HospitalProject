@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace HospitalProject.Migrations
 {
-    public partial class test : Migration
+    public partial class models : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,6 +96,8 @@ namespace HospitalProject.Migrations
                 {
                     DoctorID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DoctorDepartment = table.Column<string>(maxLength: 255, nullable: false),
+                    DoctorDescription = table.Column<string>(maxLength: 255, nullable: false),
                     DoctorName = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
@@ -344,26 +346,6 @@ namespace HospitalProject.Migrations
                         principalTable: "Billings",
                         principalColumn: "BillingID",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Departments",
-                columns: table => new
-                {
-                    DepartmentID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DepartmentName = table.Column<string>(maxLength: 255, nullable: false),
-                    DoctorID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Departments", x => x.DepartmentID);
-                    table.ForeignKey(
-                        name: "FK_Departments_Doctors_DoctorID",
-                        column: x => x.DoctorID,
-                        principalTable: "Doctors",
-                        principalColumn: "DoctorID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -706,12 +688,6 @@ namespace HospitalProject.Migrations
                 filter: "[BillingID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departments_DoctorID",
-                table: "Departments",
-                column: "DoctorID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Donations_donationFormID",
                 table: "Donations",
                 column: "donationFormID");
@@ -764,9 +740,6 @@ namespace HospitalProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clinics");
-
-            migrationBuilder.DropTable(
-                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Donations");

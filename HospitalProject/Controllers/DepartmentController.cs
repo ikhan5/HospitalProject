@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -64,5 +64,36 @@ namespace HospitalProject.Controllers
             return View(department);
         }
 
+        //edit
+        public ActionResult Edit(int? id)
+        {
+            if ((id == null) || (db.Departments.Find(id) == null))
+            {
+                return NotFound();
+            }
+            string query = "select * from Departments where DepartmentID=@id";
+            SqlParameter param = new SqlParameter("@id", id);
+            Department mydepartment = db.Departments.FromSql(query, param).FirstOrDefault();
+            return View(mydepartment);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int? id, string DepartmentName)
+        {
+            if ((id == null) || (db.Departments.Find(id) == null))
+            {
+                return NotFound();
+            }
+            string query = "update Departments set DepartmentName=@name" +
+                " where DepartmentID=@id";
+            SqlParameter[] myparams = new SqlParameter[2];
+            myparams[0] = new SqlParameter("@name", DepartmentName);
+            myparams[1] = new SqlParameter("@id", id);
+
+            db.Database.ExecuteSqlCommand(query, myparams);
+
+            return RedirectToAction("Index");
+        }
+
     }
-}   
+}   */

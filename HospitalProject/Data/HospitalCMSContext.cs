@@ -46,7 +46,6 @@ namespace HospitalProject.Data
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Medicalservice> Medicalservices { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Department> Departments { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<VolunteerPost> VolunteerPosts { get; set; }
@@ -64,7 +63,6 @@ namespace HospitalProject.Data
             modelBuilder.Entity<PlanYourStay>().ToTable("PlanYourStays");
             modelBuilder.Entity<ParkingService>().ToTable("ParkingServices");
 
-            modelBuilder.Entity<Department>().ToTable("Departments");
             modelBuilder.Entity<Rating>().ToTable("Ratings");
             modelBuilder.Entity<Question>().ToTable("Questions");
             modelBuilder.Entity<DonationForm>().ToTable("DonationForms");
