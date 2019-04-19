@@ -25,10 +25,7 @@ namespace HospitalProject.Models.GiftShop
         public List<Item> Items { get; set; }
 
 
-        
-        [ForeignKey("BillingID")]
-        public int? BillingID { get; set; }
 
-        public virtual Billing billing { get; set; }
+        
     }
 }
