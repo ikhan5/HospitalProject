@@ -35,12 +35,6 @@
             @Html.DisplayFor(model => model.client_emailadd)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.client_doctor_id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.client_doctor_id)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.date_time)
         </dt>
         <dd>
@@ -51,6 +45,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.appointment_details)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Doctors)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Doctors.DoctorDepartment)
         </dd>
     </dl>
 </div>
