@@ -92,7 +92,7 @@ namespace HospitalProject.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             DoctorsList dl = new DoctorsList();
-            dl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.DoctorID == id);
+            dl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.RatingID == id);
             dl.doctors = db.Doctors.ToList();
             if (dl != null) return View(dl);
             else return NotFound();
@@ -107,11 +107,11 @@ namespace HospitalProject.Controllers
             }
 
             string updateQuery = "update Ratings set Feedback=@feedback" +
-                " where RatingID=@id AND DoctorID=@doctorID";
-            SqlParameter[] donparams = new SqlParameter[3];
+                " where RatingID=@id";
+            SqlParameter[] donparams = new SqlParameter[2];
             donparams[0] = new SqlParameter("@id", RatingID);
-            donparams[1] = new SqlParameter("@doctorID", DoctorID);
-            donparams[2] = new SqlParameter("@feedback", Feedback);
+            //donparams[1] = new SqlParameter("@doctorID", DoctorID);
+            donparams[1] = new SqlParameter("@feedback", Feedback);
 
             db.Database.ExecuteSqlCommand(updateQuery, donparams);
             return RedirectToAction("Details/" + RatingID);
