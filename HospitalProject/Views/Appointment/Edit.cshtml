@@ -12,54 +12,55 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@Model.appointment.client_id" />
+            <input name="client_id" type="hidden" asp-for="@Model.appointment.client_id" />
             <div class="form-group">
                 <label asp-for="@Model.appointment.client_fname" class="control-label"></label>
-                <input asp-for="@Model.appointment.client_fname" class="form-control" />
+                <input name="client_fname" asp-for="@Model.appointment.client_fname" class="form-control" />
                 <span asp-validation-for="@Model.appointment.client_fname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.appointment.client_lname" class="control-label"></label>
-                <input asp-for="@Model.appointment.client_lname" class="form-control" />
+                <input name="client_lname" asp-for="@Model.appointment.client_lname" class="form-control" />
                 <span asp-validation-for="@Model.appointment.client_lname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.appointment.client_phone" class="control-label"></label>
-                <input asp-for="@Model.appointment.client_phone" class="form-control" />
+                <input name="client_phone" asp-for="@Model.appointment.client_phone" class="form-control" />
                 <span asp-validation-for="@Model.appointment.client_phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.appointment.client_emailadd" class="control-label"></label>
-                <input asp-for="@Model.appointment.client_emailadd" class="form-control" />
+                <input name="client_emailadd" asp-for="@Model.appointment.client_emailadd" class="form-control" />
                 <span asp-validation-for="@Model.appointment.client_emailadd" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label for="DoctorID" class="control-label">Regular Dr</label>
-                <select name="DoctorID" class="form-control">
-                    @foreach (var doctors in Model.doctors)
+                <label asp-for="@Model.appointment.DoctorID" class="control-label">Regular Dr</label>
+                <select name="DoctorID" asp-for="@Model.appointment.DoctorID" class="form-control" asp-items="ViewBag.DoctorID">
+                    @foreach (var doctor in Model.doctors)
                     {
-                        if (@Model.appointment.DoctorID == doctors.DoctorID)
+                        if (@Model.appointment.client_id == @doctor.DoctorID)
                         {
-                            <option selected="selected" value="@doctors.DoctorID">@doctors.DoctorName</option>
+                            <option selected="selected" value="@doctor.DoctorID">@doctor.DoctorName</option>
                         }
                         else
                         {
-                            <option value="@doctors.DoctorID">@doctors.DoctorName</option>
+                            <option value="@doctor.DoctorID">@doctor.DoctorName</option>
                         }
 
                     }
                 </select>
+                <span asp-validation-for="@Model.appointment.DoctorID" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="@Model.appointment.date_time" class="control-label"></label>
-                <input asp-for="@Model.appointment.date_time" class="form-control" />
+                <input name="date_time" asp-for="@Model.appointment.date_time" class="form-control" />
                 <span asp-validation-for="@Model.appointment.date_time" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.appointment.appointment_details" class="control-label"></label>
-                <input asp-for="@Model.appointment.appointment_details" class="form-control" />
+                <input name="appointment_details" asp-for="@Model.appointment.appointment_details" class="form-control" />
                 <span asp-validation-for="@Model.appointment.appointment_details" class="text-danger"></span>
             </div>
             <div class="form-group">
