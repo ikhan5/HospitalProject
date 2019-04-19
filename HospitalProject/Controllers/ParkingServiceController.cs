@@ -19,6 +19,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using ReflectionIT.Mvc.Paging;
 
 namespace HospitalProject.Controllers
 {
@@ -35,9 +36,11 @@ namespace HospitalProject.Controllers
             _userManager = usermanager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            return View(await db.ParkingServices.ToListAsync());
+            var query = db.ParkingServices.AsNoTracking().OrderBy(s => s.ParkingNumber);
+            var model = await PagingList.CreateAsync(query, 5, page);
+            return View(model);
         }
 
         // GET: Authors/Create
@@ -68,6 +71,85 @@ namespace HospitalProject.Controllers
             }
             return View(parkingservice);
         }
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ParkingService parking = db.ParkingServices.Find(id);
+            if (parking == null)
+            {
+                return NotFound();
+            }
+
+            return View(parking);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(int ParkingServiceID, int ParkingNumber, string Rate, bool Status, string ParkingServiceUserID)
+        {
+            if (db.PlanYourStays.Find(ParkingServiceID) == null)
+            {
+                return NotFound();
+            }
+
+            string updateQuery = "UPDATE ParkingServices set ParkingNumber=@parking, Rate=@rate, Status=@status, ParkingServiceUserID=@user" +
+                " where ParkingServiceID=@id";
+            SqlParameter[] sqlparams = new SqlParameter[5];
+            sqlparams[0] = new SqlParameter("@id", ParkingServiceID);
+            sqlparams[1] = new SqlParameter("@parking", ParkingNumber);
+            sqlparams[2] = new SqlParameter("@rate", Rate);
+            sqlparams[3] = new SqlParameter("@status", Status);
+            sqlparams[4] = new SqlParameter("@user", ParkingServiceUserID);
+
+            db.Database.ExecuteSqlCommand(updateQuery, sqlparams);
+            return RedirectToAction("Index");
+        }
+        
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ParkingService parking = db.ParkingServices.Find(id);
+            if (parking == null)
+            {
+                return NotFound();
+            }
+
+            return View(parking);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            ParkingService parking = await db.ParkingServices.FindAsync(id);
+
+            if (parking.ParkingServiceID != id)
+            {
+                return Forbid();
+            }
+
+            db.ParkingServices.Remove(parking);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 
 }

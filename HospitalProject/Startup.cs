@@ -12,6 +12,7 @@ using HospitalProject.Data;
 using HospitalProject.Models;
 using HospitalProject.Services;
 using AutoMapper;
+using ReflectionIT.Mvc.Paging;
 
 namespace HospitalProject
 {
@@ -41,6 +42,7 @@ namespace HospitalProject
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddAutoMapper();
             services.AddMvc();
+            services.AddPaging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

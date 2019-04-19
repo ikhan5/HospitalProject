@@ -1,4 +1,6 @@
-﻿@model IEnumerable<HospitalProject.Models.ParkingService>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<HospitalProject.Models.ParkingService>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper*,ReflectionIT.Mvc.Paging
 
 @{
     ViewData["Title"] = "Index";
@@ -6,48 +8,55 @@
 
 <h2>Index</h2>
 
+<nav aria-label="Plan Your Stay">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ParkingNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ParkingServiceUserID)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParkingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParkingServiceUserID)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkingNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkingServiceUserID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ParkingServiceID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ParkingServiceID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ParkingServiceID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkingNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkingServiceUserID)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ParkingServiceID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ParkingServiceID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ParkingServiceID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<nav>
+    <vc:pager paging-list="@Model" />
+</nav>
