@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using HospitalProject.Models.VolunteerViews;
-using HospitalProject.Models.VolunteerViewsModels.ViewModels;
 using HospitalProject.Models.VolunteerPostModels.ViewModels;
 
 namespace HospitalProject.Controllers
