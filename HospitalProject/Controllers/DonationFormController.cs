@@ -34,9 +34,28 @@ namespace HospitalProject.Controllers
         }
 
       
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagenum)
         {
-            return View(await db.DonationForms.ToListAsync());
+            // Pagination
+            var donationForms = await db.DonationForms.ToListAsync();
+            int formCount = donationForms.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)formCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+         
+            List<DonationForm> forms_pag = await db.DonationForms.Skip(start).Take(perpage).ToListAsync();
+            return View(forms_pag);
         }
 
         // GET: DonationForms/Create
@@ -128,7 +147,7 @@ namespace HospitalProject.Controllers
             return View(donform);
         }
 
-        // POST: Authors/Delete/5
+        // POST: DonationForm/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

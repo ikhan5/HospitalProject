@@ -33,9 +33,29 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagenum)
         {
-            return View(await db.Donations.Include(d => d.DonationForm).ToListAsync());
+
+            // Pagination
+            var donations = await db.Donations.ToListAsync();
+            int donationCount = donations.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)donationCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<Donation> donations_pag = await db.Donations.Skip(start).Take(perpage).Include(d => d.DonationForm).ToListAsync();
+            return View(donations_pag);
         }
 
         public int setTotal(int id)
@@ -109,7 +129,7 @@ namespace HospitalProject.Controllers
                 return NotFound();
             }
 
-            string updateQuery = "update Donations set donorName = @name, donorEmail=@email, isRecurring=@recurring, paymentAmount = @amount, paymentMethod =@method," +
+            string updateQuery = "update Donations set donorName = @name, donorEmail=@email, isRecurring=@recurring, paymentAmount = @amount, paymentMethod =@method" +
                 " where donationID=@id";
             SqlParameter[] donparams = new SqlParameter[6];
             donparams[0] = new SqlParameter("@id", donationID);

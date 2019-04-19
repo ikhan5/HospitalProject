@@ -33,9 +33,28 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagenum)
         {
-            return View(await db.JobPostings.ToListAsync());
+            // Pagination
+            var jobPosts = await db.JobPostings.ToListAsync();
+            int postCount = jobPosts.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)postCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<JobPosting> post_pag = await db.JobPostings.Skip(start).Take(perpage).ToListAsync();
+            return View(post_pag);
         }
 
         // GET: JobPostings/Create
