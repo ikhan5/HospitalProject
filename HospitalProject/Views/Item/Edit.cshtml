@@ -16,12 +16,12 @@
             <div class="form-group">
                 <label asp-for="@Model.item.Name" class="control-label"></label>
                 <input asp-for="@Model.item.Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <span asp-validation-for="@Model.item.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.item.ItemDescp" class="control-label"></label>
                 <input asp-for="@Model.item.ItemDescp" class="form-control" />
-                <span asp-validation-for="ItemDescp" class="text-danger"></span>
+                <span asp-validation-for="@Model.item.ItemDescp" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.item.price" class="control-label"></label>
@@ -34,14 +34,21 @@
                 <span asp-validation-for="@Model.item.quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CartID" class="control-label"></label>
-                <select name="CartID" class="form-control" asp-items="ViewBag.CartID"></select>
-                <select name="CartID" class="form-control">
-                    @foreach (var cartitem in Model.carts)
+                <label asp-for="@Model.item.CartID" class="control-label"></label>
+                <select name="CartID" asp-for="@Model.item.CartID" class="form-control" asp-items="ViewBag.CartID">
+                    @foreach (var item in Model.carts)
                     {
-                        <option value="@cartitem.CartID">@cartitem.CartID</option>
+                        if (@Model.item.CartID == @item.CartID)
+                        {
+                            <option selected="selected" value="@item.CartID">@item.CartID</option>
+                        }
+                        else
+                        {
+                            <option value="@item.CartID">@item.CartID</option>
+                        }
                     }
                 </select>
+                <span asp-validation-for="@Model.item.CartID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
