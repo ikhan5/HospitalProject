@@ -126,7 +126,7 @@ namespace HospitalProject.Controllers
                 return NotFound();
             }
             DoctorsList dfl = new DoctorsList();
-            dfl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.DoctorID == id);
+            dfl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.RatingID == id);
             dfl.doctors = db.Doctors.ToList();
             return View(dfl);
 
@@ -140,7 +140,7 @@ namespace HospitalProject.Controllers
             }
 
             DoctorsList dfl = new DoctorsList();
-            dfl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.DoctorID == id);
+            dfl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.RatingID == id);
             if (dfl == null)
             {
                 return NotFound();
