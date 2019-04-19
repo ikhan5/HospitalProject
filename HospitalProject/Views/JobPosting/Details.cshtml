@@ -1,0 +1,76 @@
+﻿@model HospitalProject.Models.JobModels.ViewModels.ApplicantsListing
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>JobPosting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.jobPosting.jobTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.jobPosting.jobTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.jobPosting.jobQualifications)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.jobPosting.jobQualifications)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.jobPosting.jobDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.jobPosting.jobDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.jobPosting.jobSkills)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.jobPosting.jobSkills)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.jobPosting.jobPostingDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.jobPosting.jobPostingDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.jobPosting.jobExpiryDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.jobPosting.jobExpiryDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <h2>Applicants</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Applicant Name</th>
+                <th>Applicant Email</th>
+                <th>Applied On</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model.jobApplications)
+            {
+                <tr>
+                    <td>@applicant.applicantName</td>
+                    <td>$@applicant.applicantEmail</td>
+                    <td>@applicant.applicationDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.jobPosting.jobPostingID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

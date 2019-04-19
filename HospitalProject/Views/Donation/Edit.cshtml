@@ -12,44 +12,44 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@Model.donation.donationID" />
+            <input name="donationID" type="hidden" asp-for="@Model.donation.donationID" />
             <div class="form-group">
                 <label asp-for="@Model.donation.donorName" class="control-label"></label>
-                <input asp-for="@Model.donation.donorName" class="form-control" />
+                <input name="donorName" asp-for="@Model.donation.donorName" class="form-control" />
                 <span asp-validation-for="@Model.donation.donorName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.donation.donorEmail" class="control-label"></label>
-                <input asp-for="@Model.donation.donorEmail" class="form-control" />
+                <input name="donorEmail" asp-for="@Model.donation.donorEmail" class="form-control" />
                 <span asp-validation-for="@Model.donation.donorEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.donation.isRecurring" class="control-label"></label>
-                <select asp-for="@Model.donation.isRecurring" class="form-control">
+                <select name="isRecurring" asp-for="@Model.donation.isRecurring" class="form-control">
                     @if (@Model.donation.isRecurring == "Monthly")
                     {
-                        <option value="Monthly" selected>Monthly</option>
+                        <option value="Monthly" selected="selected">Monthly</option>
                         <option value="Once">Once</option>
                     }
                     else
                     {
                         <option value="Monthly">Monthly</option>
-                        <option value="Once" selected>Once</option>
+                        <option value="Once" selected="selected">Once</option>
                     }
                 </select>
                 <span asp-validation-for="@Model.donation.isRecurring" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.donation.paymentMethod" class="control-label"></label>
-                <select asp-for="@Model.donation.paymentMethod" class="form-control">
+                <select name="paymentMethod" asp-for="@Model.donation.paymentMethod" class="form-control">
                     @if (@Model.donation.paymentMethod == "Credit")
                     {
-                        <option value="Credit" selected>Credit</option>
+                        <option value="Credit" selected="selected">Credit</option>
                         <option value="PayPal">Paypal</option>
                     }
                     else
                     {
-                        <option value="Credit" selected>Credit</option>
+                        <option value="Credit" selected="selected">Credit</option>
                         <option value="PayPal">Paypal</option>
                     }
 
@@ -58,7 +58,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.donation.paymentAmount" class="control-label"></label>
-                <input asp-for="@Model.donation.paymentAmount" class="form-control" />
+                <input name="paymentAmount" asp-for="@Model.donation.paymentAmount" class="form-control" />
                 <span asp-validation-for="@Model.donation.paymentAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -74,7 +74,6 @@
                         {
                             <option value="@donationForm.donationFormID">@donationForm.donationCause</option>
                         }
-
                     }
                 </select>
             </div>

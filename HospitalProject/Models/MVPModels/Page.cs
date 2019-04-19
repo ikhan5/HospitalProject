@@ -19,11 +19,9 @@ namespace HospitalProject.Models.MVPModels
         [Required, StringLength(255), Display(Name = "Page Title")]
         public string pageTitle { get; set; }
 
+
         [StringLength(int.MaxValue), Display(Name = "Page Content")]
         public string pageContent { get; set; }
-
-        [StringLength(int.MaxValue), Display(Name = "Required Skill")]
-        public string jobSkills { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime dateCreated { get; set; }

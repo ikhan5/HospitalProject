@@ -33,6 +33,7 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
+      
         public async Task<IActionResult> Index()
         {
             return View(await db.DonationForms.ToListAsync());
@@ -47,7 +48,7 @@ namespace HospitalProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-        [Bind("donationFormID,donationCause,charityName,donationGoal,presetAmounts,formDescription")] DonationForm donationForm)
+        [Bind("donationFormID,donationCause,charityName,donationGoal,presetAmounts,formDescription, totalCollected")] DonationForm donationForm)
         {
             try
             {

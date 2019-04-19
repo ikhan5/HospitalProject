@@ -22,11 +22,16 @@ namespace HospitalProject.Models.VolunteerViewsModels
         [Display(Name = "Goal($)")]
         public int donationGoal { get; set; }
 
+        [Display(Name = "Amount Collected")]
+        public int totalCollected { get; set; }
+
         [StringLength(255), Display(Name = "Preset Amounts ($)")]
         public string presetAmounts { get; set; }
 
         [StringLength(int.MaxValue), Display(Name = "Description")]
         public string formDescription { get; set; }
+
+
 
         //One Donation Form will have many Donations
         [InverseProperty("DonationForm")]

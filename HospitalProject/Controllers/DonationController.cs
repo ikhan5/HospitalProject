@@ -38,6 +38,25 @@ namespace HospitalProject.Controllers
             return View(await db.Donations.Include(d => d.DonationForm).ToListAsync());
         }
 
+        public int setTotal(int id)
+        {
+            DonationList dl = new DonationList();
+            dl.donations = db.Donations.Where(d => d.donationFormID == id).ToList();
+            var total = 0;
+
+            total = dl.donations.Sum(i => i.paymentAmount);
+
+            string updateAmount = "update DonationForms set totalCollected = @amount " +
+                "where donationFormID=@formID";
+            SqlParameter[] totalparams = new SqlParameter[2];
+            totalparams[0] = new SqlParameter("@formID", id);
+            totalparams[1] = new SqlParameter("@amount", total);
+
+            db.Database.ExecuteSqlCommand(updateAmount, totalparams);
+
+            return total;
+        }
+
         // GET: Donations/Create
         public ActionResult Create()
         {
@@ -62,6 +81,10 @@ namespace HospitalProject.Controllers
             donparams[5] = new SqlParameter("@name", donorName);
 
             db.Database.ExecuteSqlCommand(insertQuery, donparams);
+
+            var total = setTotal(donationFormID);
+
+
             return RedirectToAction("Index");
         }
 
@@ -72,30 +95,32 @@ namespace HospitalProject.Controllers
             dfl.donation = db.Donations.Include(d => d.DonationForm)
                            .SingleOrDefault(d => d.donationID == id);
             dfl.donationForms = db.DonationForms.ToList();
+
+       
             if (dfl != null) return View(dfl);
             else return NotFound();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(int donationID, string donorEmail, int isRecurring, int paymentAmount, int paymentMethod, int donationFormID)
+        public async Task<ActionResult> Edit(int donationID, string donorEmail, string isRecurring, int paymentAmount, string paymentMethod,string donorName, int donationFormID)
         {
             if (db.Donations.Find(donationID) == null)
             {
                 return NotFound();
             }
 
-            string updateQuery = "update Donations set donorEmail=@email, isRecurring=@recurring, paymentAmount = @amount, paymentMethod =@method" +
-                " where donationID=@id AND donationFormID=@formID";
+            string updateQuery = "update Donations set donorName = @name, donorEmail=@email, isRecurring=@recurring, paymentAmount = @amount, paymentMethod =@method," +
+                " where donationID=@id";
             SqlParameter[] donparams = new SqlParameter[6];
             donparams[0] = new SqlParameter("@id", donationID);
-            donparams[1] = new SqlParameter("@formID", donationFormID);
-            donparams[2] = new SqlParameter("@email", donorEmail);
-            donparams[3] = new SqlParameter("@recurring", isRecurring);
-            donparams[4] = new SqlParameter("@amount", paymentAmount);
-            donparams[5] = new SqlParameter("@method", paymentMethod);
-
+            donparams[1] = new SqlParameter("@email", donorEmail);
+            donparams[2] = new SqlParameter("@recurring", isRecurring);
+            donparams[3] = new SqlParameter("@amount", paymentAmount);
+            donparams[4] = new SqlParameter("@method", paymentMethod);
+            donparams[5] = new SqlParameter("@name", donorName);
 
             db.Database.ExecuteSqlCommand(updateQuery, donparams);
+
             return RedirectToAction("Details/" + donationID);
         }
 
@@ -109,6 +134,10 @@ namespace HospitalProject.Controllers
             dfl.donation = db.Donations.Include(d => d.DonationForm)
                            .SingleOrDefault(d => d.donationID == id);
             dfl.donationForms = db.DonationForms.ToList();
+
+            var DonationFormID = dfl.donation.donationFormID;
+
+            setTotal(DonationFormID);
             return View(dfl);
         }
 
@@ -119,6 +148,7 @@ namespace HospitalProject.Controllers
                 return NotFound();
             }
 
+
             DonationFormList dfl = new DonationFormList();
             dfl.donation = db.Donations.Include(d => d.DonationForm)
                            .SingleOrDefault(d => d.donationID == id);
@@ -126,7 +156,6 @@ namespace HospitalProject.Controllers
             {
                 return NotFound();
             }
-
             return View(dfl);
         }
 
@@ -144,6 +173,10 @@ namespace HospitalProject.Controllers
 
             db.Donations.Remove(donation);
             await db.SaveChangesAsync();
+
+
+            var DonationFormID = donation.donationFormID;
+            setTotal(DonationFormID);
             return RedirectToAction("Index");
         }
 
