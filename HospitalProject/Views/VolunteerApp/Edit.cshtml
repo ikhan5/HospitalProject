@@ -1,57 +1,64 @@
-﻿@model HospitalProject.Models.VolunteerApplication
+﻿@model HospitalProject.Models.ViewModels.VolunteerPostList
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit Volunteer Application</h2>
+<h2>Edit</h2>
 
+<h4>VolunteerApplication</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="VolunteerAppID" />
+            <input type="hidden" name="VolunteerAppID" asp-for="@Model.volunteerapplications.VolunteerAppID" />
             <div class="form-group">
-                <label asp-for="AppFName" class="control-label"></label>
-                <input asp-for="AppFName" class="form-control" />
-                <span asp-validation-for="AppFName" class="text-danger"></span>
+                <label asp-for="@Model.volunteerapplications.AppFName" class="control-label"></label>
+                <input name="AppFName" asp-for="@Model.volunteerapplications.AppFName" class="form-control" />
+                <span asp-validation-for="@Model.volunteerapplications.AppFName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AppLName" class="control-label"></label>
-                <input asp-for="AppLName" class="form-control" />
-                <span asp-validation-for="AppLName" class="text-danger"></span>
+                <label asp-for="@Model.volunteerapplications.AppLName" class="control-label"></label>
+                <input name="AppLName" asp-for="@Model.volunteerapplications.AppLName" class="form-control" />
+                <span asp-validation-for="@Model.volunteerapplications.AppLName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <label asp-for="@Model.volunteerapplications.Phone" class="control-label"></label>
+                <input name="Phone" asp-for="@Model.volunteerapplications.Phone" class="form-control" />
+                <span asp-validation-for="@Model.volunteerapplications.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="@Model.volunteerapplications.Email" class="control-label"></label>
+                <input name="Email" asp-for="@Model.volunteerapplications.Email" class="form-control" />
+                <span asp-validation-for="@Model.volunteerapplications.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
+                <label asp-for="@Model.volunteerapplications.Age" class="control-label"></label>
+                <input name="Age" asp-for="@Model.volunteerapplications.Age" class="form-control" />
+                <span asp-validation-for="@Model.volunteerapplications.Age" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descriptions" class="control-label"></label>
-                <input asp-for="Descriptions" class="form-control" />
-                <span asp-validation-for="Descriptions" class="text-danger"></span>
+                <label asp-for="@Model.volunteerapplications.Descriptions" class="control-label"></label>
+                <input name="Descriptions" asp-for="@Model.volunteerapplications.Descriptions" class="form-control" />
+                <span asp-validation-for="@Model.volunteerapplications.Descriptions" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AppDate" class="control-label"></label>
-                <input asp-for="AppDate" class="form-control" />
-                <span asp-validation-for="AppDate" class="text-danger"></span>
+                <label asp-for="@Model.volunteerapplications.AppDate" class="control-label"></label>
+                <input name="AppDate" asp-for="@Model.volunteerapplications.AppDate" class="form-control" />
+                <span asp-validation-for="@Model.volunteerapplications.AppDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="VolunteerPostID" class="control-label"></label>
-                <select asp-for="VolunteerPostID" class="form-control" asp-items="ViewBag.VolunteerPostID"></select>
-                <span asp-validation-for="VolunteerPostID" class="text-danger"></span>
+                <label for="VolunteerPostID" class="control-label">Volunteer Position</label>
+                <select name="VolunteerPostID" id="VolunteerPostID" class="form-control">
+                    @foreach (var volunteerposts in Model.volunteerposts)
+                    {
+                        <option value="@volunteerposts.VolunteerPostID">@volunteerposts.Position</option>
+                    }
+                </select>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -60,7 +67,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Cancel</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

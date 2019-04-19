@@ -10,20 +10,47 @@
     <a asp-action="Create">Add</a>
 </p>
 
+<div class="pagination">
+    @ViewData["PaginationSummary"]
+    @Html.ActionLink("Prev",
+        "Index",
+        "VolunteerApp",
+        new { pagenum= ((int)ViewData["pagenum"]-1)}
+        )
+    |
+    @Html.ActionLink("Next",
+        "Index",
+        "VolunteerApp",
+        new { pagenum = ((int)ViewData["pagenum"] + 1) }
+        )
+</div>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AppDate)
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppFName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppLName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Age)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descriptions)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppDate)
+                </th>
             <th>
                 @Html.DisplayNameFor(model => model.VolunteerPosts)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppFName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppLName)
             </th>
             <th></th>
         </tr>
@@ -32,19 +59,32 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.AppDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VolunteerPosts.Department)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.AppFName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AppLName)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.VolunteerAppID">More Details</a> |
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descriptions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VolunteerPosts.Department)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VolunteerAppID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VolunteerAppID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.VolunteerAppID">Delete</a>
             </td>
         </tr>
