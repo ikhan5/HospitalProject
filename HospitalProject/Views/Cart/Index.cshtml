@@ -9,6 +9,20 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="pagination">
+    @ViewData["PaginationSummary"]
+    @Html.ActionLink("Prev",
+        "Index",
+        "Cart",
+        new { pagenum= ((int)ViewData["pagenum"]-1)}
+        )
+    |
+    @Html.ActionLink("Next",
+        "Index",
+        "Cart",
+        new { pagenum = ((int)ViewData["pagenum"] + 1) }
+        )
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -18,9 +32,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Paymentmethods)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.billing)
-            </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -33,9 +45,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Paymentmethods)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.billing.Paymentmethods)
-            </td>
+            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CartID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.CartID">Details</a> |
