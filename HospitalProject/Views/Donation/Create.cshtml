@@ -1,0 +1,68 @@
+﻿@model HospitalProject.Models.DonationModels.ViewModels.DonationFormList
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Donation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.donation.donorName" class="control-label"></label>
+                <input name="donorName" asp-for="@Model.donation.donorName" class="form-control" />
+                <span asp-validation-for="@Model.donation.donorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.donation.donorEmail" class="control-label"></label>
+                <input type="email" name="donorEmail" asp-for="@Model.donation.donorEmail" class="form-control" />
+                <span asp-validation-for="@Model.donation.donorEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.donation.isRecurring" class="control-label"></label>
+                <select name="isRecurring" asp-for="@Model.donation.isRecurring" class="form-control">
+                    <option value="Monthly">Monthly</option>
+                    <option value="Once">Once</option>
+                </select>
+                <span asp-validation-for="@Model.donation.isRecurring" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.donation.paymentMethod" class="control-label"></label>
+                <select name="paymentMethod" asp-for="@Model.donation.paymentMethod" class="form-control">
+                    <option value="PayPal">PayPal</option>
+                    <option value="Credit">Credit Card</option>
+                </select>
+                <span asp-validation-for="@Model.donation.paymentMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.donation.paymentAmount" class="control-label"></label>
+                <input min="1" name="paymentAmount" asp-for="@Model.donation.paymentAmount" class="form-control" />
+                <span asp-validation-for="@Model.donation.paymentAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="donationFormID" class="control-label">Donation Form:</label>
+                <select name="donationFormID" id="donationFormID" class="form-control">
+                    @foreach (var donationForm in Model.donationForms)
+                    {
+                        <option value="@donationForm.donationFormID">@donationForm.donationCause</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

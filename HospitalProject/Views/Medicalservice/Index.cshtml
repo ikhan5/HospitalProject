@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HospitalProject.Models.Medicalservice>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="pagination">
+    @ViewData["PaginationSummary"]
+    @Html.ActionLink("Prev",
+        "Index",
+        "Medicalservice",
+        new { pagenum= ((int)ViewData["pagenum"]-1)}
+        )
+    |
+    @Html.ActionLink("Next",
+        "Index",
+        "Medicalservice",
+        new { pagenum = ((int)ViewData["pagenum"] + 1) }
+        )
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.medical_services_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medical_services_description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medical_service_type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.medical_services_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.medical_services_description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.medical_service_type)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.medical_services_id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.medical_services_id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.medical_services_id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HospitalProject.Models.VolunteerApplication>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Volunteer Application</h2>
+
+<p>
+    <a asp-action="Create">Add</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VolunteerPosts)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppFName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppLName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VolunteerPosts.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppFName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppLName)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.VolunteerAppID">More Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VolunteerAppID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

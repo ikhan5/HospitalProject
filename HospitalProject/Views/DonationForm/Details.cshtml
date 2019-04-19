@@ -1,0 +1,77 @@
+﻿@model HospitalProject.Models.DonationModels.ViewModels.DonationList
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DonationForm</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.donationCause)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.donationCause)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.charityName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.charityName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.donationGoal)
+        </dt>
+        <dd>
+            $@Html.DisplayFor(model => model.donationForm.donationGoal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.totalCollected)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.totalCollected)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.presetAmounts)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.presetAmounts)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.donationForm.formDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.formDescription)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h2>Payments Made</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Donor</th>
+                <th>Amount Paid</th>
+                <th>Payment Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var donations in Model.donations)
+            {
+                <tr>
+                    <td>@donations.donorName</td>
+                    <td>$@donations.paymentAmount</td>
+                    <td>@donations.paymentMethod</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.donationForm.donationFormID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

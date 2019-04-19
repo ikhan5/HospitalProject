@@ -39,7 +39,7 @@ namespace HospitalProject.Controllers
             return View(model);
         }
 
-        // GET: Authors/Create
+        // GET: EmergencyWaitTimes/Create
         public ActionResult Create()
         {
             return View();

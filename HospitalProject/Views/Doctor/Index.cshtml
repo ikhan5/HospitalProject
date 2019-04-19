@@ -1,0 +1,62 @@
+﻿@model IEnumerable<HospitalProject.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="pagination">
+    @ViewData["PaginationSummary"]
+    @Html.ActionLink("Prev",
+        "Index",
+        "Doctor",
+        new { pagenum= ((int)ViewData["pagenum"]-1)}
+        )
+    |
+    @Html.ActionLink("Next",
+        "Index",
+        "Doctor",
+        new { pagenum = ((int)ViewData["pagenum"] + 1) }
+        )
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorDepartment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorDescription)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoctorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoctorDepartment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoctorDescription)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DoctorID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.DoctorID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DoctorID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

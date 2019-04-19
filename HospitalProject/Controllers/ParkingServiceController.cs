@@ -43,7 +43,7 @@ namespace HospitalProject.Controllers
             return View(model);
         }
 
-        // GET: Authors/Create
+        // GET: ParkingService/Create
         public ActionResult Create()
         {
             return View();

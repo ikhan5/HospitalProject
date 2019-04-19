@@ -1,0 +1,56 @@
+﻿@model HospitalProject.Models.JobModels.ViewModels.ApplicationListing
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>JobApplication</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input name="jobApplicationID" type="hidden" asp-for="@Model.jobApplication.jobApplicationID" />
+            <div class="form-group">
+                <label asp-for="@Model.jobApplication.applicantName" class="control-label"></label>
+                <input name="applicantName" asp-for="@Model.jobApplication.applicantName" class="form-control" />
+                <span asp-validation-for="@Model.jobApplication.applicantName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.jobApplication.applicantEmail" class="control-label"></label>
+                <input name="applicantEmail" asp-for="@Model.jobApplication.applicantEmail" class="form-control" />
+                <span asp-validation-for="@Model.jobApplication.applicantEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.jobApplication.jobPostingID" class="control-label"></label>
+                <select name="jobPostingID" asp-for="@Model.jobApplication.jobPostingID" class="form-control" asp-items="ViewBag.jobPostingID">
+                    @foreach (var jobPosting in Model.jobPostings)
+                    {
+                        if (@Model.jobApplication.jobApplicationID == @jobPosting.jobPostingID)
+                        {
+                            <option selected="selected" value="@jobPosting.jobPostingID">@jobPosting.jobTitle</option>
+                        }
+                        else
+                        {
+                            <option value="@jobPosting.jobPostingID">@jobPosting.jobTitle</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="@Model.jobApplication.jobPostingID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

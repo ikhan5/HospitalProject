@@ -1,0 +1,48 @@
+﻿@model IEnumerable<HospitalProject.Models.VolunteerPost>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Volunteer Posting</h2>
+
+<p>
+    <a asp-action="Create">Add Post</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PostDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.VolunteerPostID">More Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.VolunteerPostID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

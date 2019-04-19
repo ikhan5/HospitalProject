@@ -1,0 +1,116 @@
+﻿@model HospitalProject.Models.ReferAPatient
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Are you sure you want to delete this?</h3>
+
+<div>
+    <hr />
+    <h4>Patient Information</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferalDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReferalDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PatName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PatName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OHIP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OHIP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PatAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PatAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PatPhone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PatPhone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PatEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PatEmail)
+        </dd>
+    </dl>
+    <h4>Medical Information</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgReq)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProgReq)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrPrimDiag)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrPrimDiag)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MedHist)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MedHist)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceReq)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ServiceReq)
+        </dd>
+    </dl>
+    <h4>Physician Information</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferFac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReferFac)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferPhysName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReferPhysName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferPhysPhone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReferPhysPhone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferPhysEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReferPhysEmail)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ReferAPatientID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Cancel</a>
+    </form>
+</div>

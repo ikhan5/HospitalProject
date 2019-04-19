@@ -1,0 +1,69 @@
+﻿@model HospitalProject.Models.ViewModels.AppointmentList
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Appointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.appointment.client_fname" class="control-label"></label>
+                <input  name="client_fname" asp-for="@Model.appointment.client_fname" class="form-control" />
+                <span asp-validation-for="@Model.appointment.client_fname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.appointment.client_lname" class="control-label"></label>
+                <input  name="client_lname" asp-for="@Model.appointment.client_lname" class="form-control" />
+                <span asp-validation-for="@Model.appointment.client_lname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.appointment.client_phone" class="control-label"></label>
+                <input name="client_phone" asp-for="@Model.appointment.client_phone" class="form-control" />
+                <span asp-validation-for="@Model.appointment.client_phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.appointment.client_emailadd" class="control-label"></label>
+                <input name="client_emailadd" asp-for="@Model.appointment.client_emailadd" class="form-control" />
+                <span asp-validation-for="@Model.appointment.client_emailadd" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="DoctorID" class="control-label">Regular Dr:</label>
+                <select name="DoctorID" id="DoctorID" class="form-control">
+                    @foreach (var doctors in Model.doctors)
+                    {
+                        <option value="@doctors.DoctorID">@doctors.DoctorName</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.appointment.date_time" class="control-label"></label>
+                <input name="date_time" asp-for="@Model.appointment.date_time" class="form-control" />
+                <span asp-validation-for="@Model.appointment.date_time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.appointment.appointment_details" class="control-label"></label>
+                <input name="appointment_details" asp-for="@Model.appointment.appointment_details" class="form-control" />
+                <span asp-validation-for="@Model.appointment.appointment_details" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

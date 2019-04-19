@@ -1,0 +1,71 @@
+﻿@model IEnumerable<HospitalProject.Models.MVPModels.Page>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.pageAuthor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pageTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pageContent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.dateCreated)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.lastModified)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pageOrder)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Navigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.pageAuthor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pageTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pageContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastModified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pageOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Navigation.navigationName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.pageID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.pageID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.pageID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
