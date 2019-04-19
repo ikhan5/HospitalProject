@@ -9,6 +9,20 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="pagination">
+    @ViewData["PaginationSummary"]
+    @Html.ActionLink("Prev",
+        "Index",
+        "Page",
+        new { pagenum= ((int)ViewData["pagenum"]-1)}
+        )
+    |
+    @Html.ActionLink("Next",
+        "Index",
+        "Page",
+        new { pagenum = ((int)ViewData["pagenum"] + 1) }
+        )
+</div>
 <table class="table">
     <thead>
         <tr>

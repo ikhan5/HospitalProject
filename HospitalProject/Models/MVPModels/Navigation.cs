@@ -13,13 +13,13 @@ namespace HospitalProject.Models.MVPModels
         [Key]
         public int navigationID { get; set; }
 
-        [Required, StringLength(255), Display(Name = "Navigation Header Name")]
+        [Required, StringLength(255), Display(Name = "Header Name")]
         public string navigationName { get; set; }
 
-        [StringLength(255), Display(Name = "Navigation URL")]
+        [StringLength(255), Display(Name = "URL")]
         public string navigationURL { get; set; }
 
-        [Required, Display(Name = "Navigation Position")]
+        [Required, Display(Name = "Position")]
         public int navigationPosition { get; set; }
 
         //One Navigation will have many Pages

@@ -33,9 +33,29 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagenum)
         {
-            return View(await db.JobApplications.Include(j => j.JobPosting).ToListAsync());
+
+            // Pagination
+            var jobApps = await db.JobApplications.ToListAsync();
+            int appCount = jobApps.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)appCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<JobApplication> app_pag = await db.JobApplications.Skip(start).Take(perpage).Include(j => j.JobPosting).ToListAsync();
+            return View(app_pag);
         }
 
         // GET: JobApplications/Create
@@ -86,13 +106,14 @@ namespace HospitalProject.Controllers
 
             DateTime appDate = DateTime.Today;
 
-            string updateQuery = "update JobApplications set applicantName = @name, applicantEmail =@email, applicationDate=@date " +
+            string updateQuery = "update JobApplications set applicantName = @name, applicantEmail =@email, applicationDate=@date, jobPostingID =@postid " +
             "where jobApplicationID = @appID";
-            SqlParameter[] appparams = new SqlParameter[4];
+            SqlParameter[] appparams = new SqlParameter[5];
             appparams[0] = new SqlParameter("@name", applicantName);
             appparams[1] = new SqlParameter("@email", applicantEmail);
             appparams[2] = new SqlParameter("@date", appDate);
             appparams[3] = new SqlParameter("@appID", jobApplicationID);
+            appparams[4] = new SqlParameter("@postID", jobPostingID);
 
             db.Database.ExecuteSqlCommand(updateQuery, appparams);
             return RedirectToAction("Index");

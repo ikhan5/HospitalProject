@@ -33,9 +33,29 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagenum)
         {
-            return View(await db.Pages.Include(p => p.Navigation).ToListAsync());
+
+            // Pagination
+            var pages = await db.Pages.ToListAsync();
+            int pageCount = pages.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)pageCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<Page> page_pag = await db.Pages.Skip(start).Take(perpage).Include(p => p.Navigation).ToListAsync();
+            return View(page_pag);
         }
 
         // GET: Page/Create
@@ -71,7 +91,7 @@ namespace HospitalProject.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            //find donation form where 
+            //find Pages where 
             NavigationListing nl = new NavigationListing();
             nl.page = db.Pages.Include(d => d.Navigation)
                            .SingleOrDefault(d => d.pageID == id);
@@ -140,7 +160,7 @@ namespace HospitalProject.Controllers
             return View(nl);
         }
 
-        // POST: Authors/Delete/5
+        // POST: Pages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

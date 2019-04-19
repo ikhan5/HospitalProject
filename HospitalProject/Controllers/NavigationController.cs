@@ -33,9 +33,29 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagenum)
         {
-            return View(await db.Navigations.ToListAsync());
+
+            // Pagination
+            var navs = await db.Navigations.ToListAsync();
+            int navCount = navs.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)navCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<Navigation> nav_pag = await db.Navigations.Skip(start).Take(perpage).ToListAsync();
+            return View(nav_pag);
         }
 
         // GET: Navigation/Create
@@ -69,7 +89,7 @@ namespace HospitalProject.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            //find donation form where 
+            //find navigation where 
             var nav = db.Navigations.Find(id);
             if (nav != null) return View(nav);
             else return NotFound();

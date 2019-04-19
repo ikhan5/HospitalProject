@@ -28,7 +28,7 @@
                 <select name="jobPostingID" asp-for="@Model.jobApplication.jobPostingID" class="form-control" asp-items="ViewBag.jobPostingID">
                     @foreach (var jobPosting in Model.jobPostings)
                     {
-                        if (@Model.jobApplication.jobApplicationID == @jobPosting.jobPostingID)
+                        if (@Model.jobApplication.jobPostingID == @jobPosting.jobPostingID)
                         {
                             <option selected="selected" value="@jobPosting.jobPostingID">@jobPosting.jobTitle</option>
                         }
