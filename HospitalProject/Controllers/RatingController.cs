@@ -57,7 +57,7 @@ namespace HospitalProject.Controllers
             }
 
             List<Rating> ratings = await db.Ratings.Skip(start).Take(perpage).ToListAsync();
-            return View(ratings);
+            return View(await db.Ratings.Include(d => d.Doctors).ToListAsync());
         }
 
         
@@ -65,38 +65,115 @@ namespace HospitalProject.Controllers
 
         public ActionResult Create()
         {
-       
-            return View();
+            DoctorsList dl = new DoctorsList();
+            dl.doctors = db.Doctors.ToList();
+            return View(dl);
         }
+
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-        [Bind("RatingID,DoctorID,Feedback")] Rating rating)
+        public async Task<ActionResult> Create(string Feedback, int DoctorID)
         {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Add(rating);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
-            }
-            return View(rating);
+            string insertQuery = "insert into Ratings (Feedback, DoctorID) " +
+            "values (@feedback, @doctorID)";
+
+            SqlParameter[] donparams = new SqlParameter[2];
+            donparams[0] = new SqlParameter("@doctorID", DoctorID);
+            donparams[1] = new SqlParameter("@feedback", Feedback);
+        
+            db.Database.ExecuteSqlCommand(insertQuery, donparams);
+            return RedirectToAction("Index");
         }
 
-        //update
 
         //edit
+        public async Task<ActionResult> Edit(int id)
+        {
+            DoctorsList dl = new DoctorsList();
+            dl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.DoctorID == id);
+            dl.doctors = db.Doctors.ToList();
+            if (dl != null) return View(dl);
+            else return NotFound();
+        }
 
-        //delete
+        [HttpPost]
+        public async Task<ActionResult> Edit(int RatingID, string Feedback, int DoctorID)
+        {
+            if (db.Ratings.Find(RatingID) == null)
+            {
+                return NotFound();
+            }
+
+            string updateQuery = "update Ratings set Feedback=@feedback" +
+                " where RatingID=@id AND DoctorID=@doctorID";
+            SqlParameter[] donparams = new SqlParameter[3];
+            donparams[0] = new SqlParameter("@id", RatingID);
+            donparams[1] = new SqlParameter("@doctorID", DoctorID);
+            donparams[2] = new SqlParameter("@feedback", Feedback);
+
+            db.Database.ExecuteSqlCommand(updateQuery, donparams);
+            return RedirectToAction("Details/" + RatingID);
+        }
+
+        //details
+
+        public async Task<ActionResult> Details(int id)
+        {
+            if (db.Ratings.Find(id) == null)
+            {
+                return NotFound();
+            }
+            DoctorsList dfl = new DoctorsList();
+            dfl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.DoctorID == id);
+            dfl.doctors = db.Doctors.ToList();
+            return View(dfl);
+
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            DoctorsList dfl = new DoctorsList();
+            dfl.rating = db.Ratings.Include(d => d.Doctors).SingleOrDefault(d => d.DoctorID == id);
+            if (dfl == null)
+            {
+                return NotFound();
+            }
+
+            return View(dfl);
+        }
+
+        // POST: Authors/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Rating rating = await db.Ratings.FindAsync(id);
+
+            if (rating.RatingID != id)
+            {
+                return Forbid();
+            }
+
+            db.Ratings.Remove(rating);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
     }
 }
