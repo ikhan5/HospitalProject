@@ -67,14 +67,17 @@ namespace HospitalProject.Controllers
         }
         public async Task<ActionResult> Edit(int id)
         {
-            
-            CartList dfl = new CartList();
-            dfl.item = db.Items.Include(d => d.cart)
-                           .SingleOrDefault(d => d.ItemID == id);
-            dfl.carts = db.Carts.ToList();
-            if (dfl != null) return View(dfl);
+            //find job posting form where 
+            ItemList cl = new ItemList();
+            cl.carts = db.Carts.Include(d => d.Items)
+                           .SingleOrDefault(d => d.CartID == id);
+            cl.item = db.Items.ToList();
+
+
+            if (cl != null) return View(cl);
             else return NotFound();
         }
+
         [HttpPost]
         public async Task<ActionResult> Edit(string ItemDescp, string Name, int price, int quantity, int CartID)
         {
@@ -83,19 +86,18 @@ namespace HospitalProject.Controllers
                 return NotFound();
             }
 
-            string updateQuery = "update Items set ItemDescp=@descp, Name=@name, price = @price, quantity =@quantity, CartID=@id " +
-                " where CartID=@id AND ItemID=@formID";
-            SqlParameter[] donparams = new SqlParameter[5];
-            donparams[0] = new SqlParameter("@descp", ItemDescp);
-            donparams[1] = new SqlParameter("@name", Name);
-            donparams[2] = new SqlParameter("@price", price);
-            donparams[3] = new SqlParameter("@quantity", quantity);
-            donparams[4] = new SqlParameter("@id", CartID);
+            string updateQuery = "update Items set ItemDescp=@descp, Name=@name,price=@price, quantity= @quantity" +" where ItemID=@id";
+            SqlParameter[] postparams = new SqlParameter[5];
+            postparams[0] = new SqlParameter("@id", CartID);
+            postparams[1] = new SqlParameter("@descp", ItemDescp);
+            postparams[2] = new SqlParameter("@name", Name);
+            postparams[3] = new SqlParameter("@price", price);
+            postparams[4] = new SqlParameter("@quantity", quantity);
             
 
-
-            db.Database.ExecuteSqlCommand(updateQuery, donparams);
+            db.Database.ExecuteSqlCommand(updateQuery, postparams);
             return RedirectToAction("Details/" + CartID);
         }
+
     }
 }
