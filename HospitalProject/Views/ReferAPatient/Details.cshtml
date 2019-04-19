@@ -4,18 +4,12 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Patient Referral</h2>
+<h2>Details of Patient Referral</h2>
 
+<h4>@Html.DisplayNameFor(model => model.ReferalDate) : @Html.DisplayFor(model => model.ReferalDate)</h4>
 <div>
-    <h4>Details</h4>
-    <hr />
+    <h4>Patient Information</h4>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ReferalDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ReferalDate)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.PatName)
         </dt>
@@ -52,6 +46,9 @@
         <dd>
             @Html.DisplayFor(model => model.PatEmail)
         </dd>
+    </dl>
+    <h4>Medical Information</h4>
+        <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.ProgReq)
         </dt>
@@ -76,6 +73,11 @@
         <dd>
             @Html.DisplayFor(model => model.ServiceReq)
         </dd>
+    </dl>
+</div>
+<div>
+   <h4>Physician Information</h4>
+    <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.ReferFac)
         </dt>
@@ -102,6 +104,7 @@
         </dd>
     </dl>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ReferAPatientID">Edit</a> |
     <a asp-action="Index">Back</a>

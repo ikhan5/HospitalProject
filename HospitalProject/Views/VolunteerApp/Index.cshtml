@@ -7,8 +7,9 @@
 <h2>Volunteer Application</h2>
 
 <p>
-    <a asp-action="Create">Apply</a>
+    <a asp-action="Create">Add</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -23,18 +24,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AppLName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descriptions)
             </th>
             <th></th>
         </tr>
@@ -55,20 +44,7 @@
                 @Html.DisplayFor(modelItem => item.AppLName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descriptions)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.VolunteerAppID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.VolunteerAppID">Details</a> |
+                <a asp-action="Details" asp-route-id="@item.VolunteerAppID">More Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.VolunteerAppID">Delete</a>
             </td>
         </tr>
