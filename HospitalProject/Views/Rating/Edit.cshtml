@@ -15,10 +15,14 @@
             <input type="hidden" asp-for="@Model.rating.RatingID" />
             <div class="form-group">
                 <label for="DoctorID" class="control-label">Doctor Name:</label>
-                <select name="DoctorID" class="form-control">
+
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.rating.DoctorID" class="control-label"></label>
+                <select name="DoctorID" asp-for="@Model.rating.DoctorID" class="form-control" asp-items="ViewBag.DoctorID">
                     @foreach (var doctor in Model.doctors)
                     {
-                        if (@Model.doctors.DoctorID == @doctor.DoctorID)
+                        if (@Model.rating.RatingID == @doctor.DoctorID)
                         {
                             <option selected="selected" value="@doctor.DoctorID">@doctor.DoctorName</option>
                         }
@@ -26,11 +30,11 @@
                         {
                             <option value="@doctor.DoctorID">@doctor.DoctorName</option>
                         }
-
                     }
                 </select>
+                <span asp-validation-for="@Model.rating.DoctorID" class="text-danger"></span>
             </div>
-           
+
             <div class="form-group">
                 <label asp-for="@Model.rating.Feedback" class="control-label"></label>
                 <input name="Feedback" asp-for="@Model.rating.Feedback" class="form-control" />

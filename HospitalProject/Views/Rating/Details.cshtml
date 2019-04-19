@@ -11,20 +11,20 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Doctor)
+            @Html.DisplayNameFor(model => model.rating.Doctors)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Doctor.DoctorName)
+            @Html.DisplayFor(model => model.rating.Doctors.DoctorName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Feedback)
+            @Html.DisplayNameFor(model => model.rating.Feedback)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Feedback)
+            @Html.DisplayFor(model => model.rating.Feedback)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.RatingID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.rating.RatingID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

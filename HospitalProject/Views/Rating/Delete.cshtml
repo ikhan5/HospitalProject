@@ -12,21 +12,21 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Feedback)
+            @Html.DisplayNameFor(model => model.rating.Feedback)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Feedback)
+            @Html.DisplayFor(model => model.rating.Feedback)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Doctors)
+            @Html.DisplayNameFor(model => model.rating.Doctors.DoctorDepartment)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Doctors.DoctorDepartment)
+            @Html.DisplayFor(model => model.rating.Doctors.DoctorDepartment)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="RatingID" />
+        <input type="hidden" asp-for="@Model.rating.RatingID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
