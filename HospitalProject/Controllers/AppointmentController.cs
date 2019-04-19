@@ -19,6 +19,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using HospitalProject.Models.ViewModels;
+
 
 namespace HospitalProject.Controllers
 {
@@ -52,86 +54,112 @@ namespace HospitalProject.Controllers
             }
 
             List<Appointment> app = await db.Appointments.Skip(start).Take(perpage).ToListAsync();
-            return View(app);
+            // return View(app);
+            return View(await db.Appointments.Include(a => a.Doctors).ToListAsync());
         }
 
         // GET: Appointment/Create
         public ActionResult Create()
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-        [Bind("appointment_details, client_doctor_id,client_emailadd,client_fname,client_lname,client_phone,date_time")] Appointment appointment)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Add(appointment);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
-            }
-            return View(appointment);
-        }
-
-        // GET: Appointment/Edit
-        public ActionResult Edit(int? id)
-        {
-            if ((id == null) || (db.Appointments.Find(id) == null))
-            {
-                return NotFound();
-            }
-            string query = "select * from Appointments where client_id=@id";
-            SqlParameter param = new SqlParameter("@id", id);
-            Appointment app = db.Appointments.FromSql(query, param).FirstOrDefault();
+            AppointmentList app = new AppointmentList();
+            app.doctors = db.Doctors.ToList();
             return View(app);
         }
 
         [HttpPost]
-        public ActionResult Edit(int? id, string appointment_details, string client_doctor_id, string client_emailadd, string client_fname, string client_lname, string client_phone, string date_time)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(string appointment_details, string client_emailadd, string client_fname, string client_lname, int client_phone, string date_time, int DoctorID)
         {
-            if ((id == null) || (db.Appointments.Find(id) == null))
-            {
-                return NotFound();
-            }
-            string query = "update Appointments set appointment_details=@appointmentDetails, client_doctor_id=@clientDocid, client_emailadd=@emailAdd, client_fname=@clientFname, client_lname=@clientLname, client_phone=@clientPhone, date_time=@appDateTime" +
-                " where client_id=@id";
-            SqlParameter[] myparams = new SqlParameter[8];
-            myparams[0] = new SqlParameter("@appointmentDetails", appointment_details);
-            myparams[1] = new SqlParameter("@id", id);
-            myparams[2] = new SqlParameter("@clientDocid", client_doctor_id);
-            myparams[3] = new SqlParameter("@emailAdd", client_emailadd);
-            myparams[4] = new SqlParameter("@clientFname", client_fname);
-            myparams[5] = new SqlParameter("@clientLname", client_lname);
-            myparams[6] = new SqlParameter("@clientPhone", client_phone);
-            myparams[7] = new SqlParameter("@appDateTime", date_time);
+            string insertQuery = "insert into Appointments (appointment_details, client_emailadd, client_fname, client_lname, client_phone,date_time, DoctorID) " +
+            "values (@app_details,@client_email,@client_fname,@client_lname, @client_phn,@app_datetime,@doctorID)";
 
-            db.Database.ExecuteSqlCommand(query, myparams);
+            SqlParameter[] donparams = new SqlParameter[7];
+            donparams[0] = new SqlParameter("@app_details", appointment_details);
+            donparams[1] = new SqlParameter("@doctorID", DoctorID);
+            donparams[2] = new SqlParameter("@client_email", client_emailadd);
+            donparams[3] = new SqlParameter("@client_fname", client_fname);
+            donparams[4] = new SqlParameter("@client_lname", client_lname);
+            donparams[5] = new SqlParameter("@client_phn", client_phone);
+            donparams[6] = new SqlParameter("@app_datetime", date_time);
 
+            db.Database.ExecuteSqlCommand(insertQuery, donparams);
             return RedirectToAction("Index");
         }
 
-        //Appointment/details
+
+        // GET: Appointment/Edit
+        /*  public ActionResult Edit(int? id)
+          {
+              if ((id == null) || (db.Appointments.Find(id) == null))
+              {
+                  return NotFound();
+              }
+              string query = "select * from Appointments where client_id=@id";
+              SqlParameter param = new SqlParameter("@id", id);
+              Appointment app = db.Appointments.FromSql(query, param).FirstOrDefault();
+              return View(app);
+          }*/
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            AppointmentList app = new AppointmentList();
+            app.appointment = db.Appointments.Include(d => d.Doctors)
+                           .SingleOrDefault(d => d.DoctorID == id);
+            app.doctors = db.Doctors.ToList();
+            if (app != null) return View(app);
+            else return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(int client_id, string appointment_details, string client_emailadd, string client_fname, string client_lname,int client_phone, string date_time, int DoctorID)
+        {
+            if (db.Appointments.Find(client_id) == null)
+            {
+                return NotFound();
+            }
+
+            string updateQuery = "update Appointments set appointment_details=@details, client_emailadd=@email, client_fname = @fname, client_lname = @lname, client_phone=@phn, date_time=@datetime" +
+                " where client_id=@id AND DoctorID=@docID";
+            SqlParameter[] donparams = new SqlParameter[8];
+            donparams[0] = new SqlParameter("@id", client_id);
+            donparams[1] = new SqlParameter("@docID", DoctorID);
+            donparams[2] = new SqlParameter("@details", appointment_details);
+            donparams[3] = new SqlParameter("@email", client_emailadd);
+            donparams[4] = new SqlParameter("@fname", client_fname);
+            donparams[5] = new SqlParameter("@lname", client_lname);
+            donparams[6] = new SqlParameter("@phn", client_phone);
+            donparams[7] = new SqlParameter("@date_time", date_time);
+
+
+            db.Database.ExecuteSqlCommand(updateQuery, donparams);
+            return RedirectToAction("Details/" + client_id);
+            //return RedirectToAction("Index");
+        }
+
         public async Task<ActionResult> Details(int id)
         {
             if (db.Appointments.Find(id) == null)
             {
                 return NotFound();
             }
-
-            Appointment appDetails = await db.Appointments.SingleOrDefaultAsync(d => d.client_id == id);
-            return View(appDetails);
+            AppointmentList dfl = new AppointmentList();
+            dfl.appointment = db.Appointments.Include(d => d.Doctors)
+                           .SingleOrDefault(d => d.DoctorID == id);
+            dfl.doctors = db.Doctors.ToList();
+            return View(dfl);
         }
+
+        //Appointment/details
+        /* public async Task<ActionResult> Details(int id)
+         {
+             if (db.Appointments.Find(id) == null)
+             {
+                 return NotFound();
+             }
+
+             Appointment appDetails = await db.Appointments.SingleOrDefaultAsync(d => d.client_id == id);
+             return View(appDetails);
+         }*/
 
         //Appointment/delete
         public async Task<IActionResult> Delete(int id)

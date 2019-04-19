@@ -5,17 +5,15 @@ using System.Threading.Tasks;
 
 namespace HospitalProject.Models.GiftShop.ViewModel
 {
-    public class BillingList
+    public class CartList
     {
-        public BillingList()
+        public CartList()
         {
 
         }
 
-        public virtual Cart cart { get; set; }
-        public IEnumerable<Billing> billings { get; set; }
+        public virtual Item item { get; set; }
+        public IEnumerable<Cart> carts { get; set; }
 
     }
-
-    
 }

@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Application of @Html.DisplayFor(model => model.AppFName) @Html.DisplayFor(model => model.AppLName)</h2>
 
 <div>
-    <h4>VolunteerApplication</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -62,5 +62,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.VolunteerAppID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back</a>
 </div>

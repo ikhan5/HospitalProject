@@ -25,8 +25,14 @@ namespace HospitalProject.Models
         [Required, StringLength(255), Display(Name = "Email Address:")]
         public string client_emailadd { get; set; }
 
-        [Required, StringLength(255), Display(Name = "Regular Dr:")]
-        public string client_doctor_id { get; set; }
+        /*[Required, StringLength(255), Display(Name = "Regular Dr:")]
+        public string client_doctor_id { get; set; }*/
+
+          //Each Donation has a Donation Form ID
+        [ForeignKey("DoctorID")]
+        public int DoctorID { get; set; }
+        // Donation belongs to a Donation Form
+        public virtual Doctor Doctors { get; set; }
 
         [Required, DataType(DataType.Date), Display(Name = "Date and Time:")]
         public string date_time { get; set; }

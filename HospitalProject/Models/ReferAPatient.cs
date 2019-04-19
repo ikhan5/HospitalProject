@@ -22,7 +22,7 @@ namespace HospitalProject.Models
         [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
 
-        [Required, StringLength(255), Display(Name = "OHIP Number")]
+        [Required, StringLength(255), Display(Name = "OHIP")]
         public string OHIP { get; set; }
 
         [Required, StringLength(int.MaxValue), Display(Name = "Patient Address")]
@@ -37,7 +37,7 @@ namespace HospitalProject.Models
         [Required, StringLength(255), Display(Name = "Program Required")]
         public string ProgReq { get; set; }
 
-        [Required, StringLength(int.MaxValue), Display(Name = "Current Primary Diagnosis")]
+        [Required, StringLength(int.MaxValue), Display(Name = "Current Diagnosis")]
         public string CurrPrimDiag { get; set; }
 
         [Required, StringLength(int.MaxValue), Display(Name = "Medical History")]
@@ -49,13 +49,13 @@ namespace HospitalProject.Models
         [Required, StringLength(255), Display(Name = "Referring Facility")]
         public string ReferFac { get; set; }
 
-        [Required, StringLength(255), Display(Name = "Referring Physician Name")]
+        [Required, StringLength(255), Display(Name = "Physician Name")]
         public string ReferPhysName { get; set; }
 
-        [Required, StringLength(255), Display(Name = "Referring Physician Phone")]
+        [Required, StringLength(255), Display(Name = "Physician Phone")]
         public string ReferPhysPhone { get; set; }
 
-        [Required, StringLength(255), Display(Name = "Referring Physician Email")]
+        [Required, StringLength(255), Display(Name = "Physician Email")]
         public string ReferPhysEmail { get; set; }
     }
 }

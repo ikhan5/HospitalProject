@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace HospitalProject.Models.ViewModels
 {
-    public class DoctorsList
+    public class AppointmentList
     {
-        public DoctorsList()
+        public AppointmentList()
         {
-
         }
 
-        public virtual Rating rating { get; set; }
+        public virtual Appointment appointment { get; set; }
         public IEnumerable<Doctor> doctors { get; set; }
     }
 }

@@ -19,6 +19,9 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using HospitalProject.Models.VolunteerViews;
+using HospitalProject.Models.VolunteerViewsModels.ViewModels;
+using HospitalProject.Models.VolunteerPostModels.ViewModels;
 
 namespace HospitalProject.Controllers
 {
@@ -31,74 +34,77 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index(int pagenum)
         {
-            return View(await db.VolunteerApplications.ToListAsync());
+            return View(await db.VolunteerApplications.Include(d=>d.VolunteerPosts).ToListAsync());
         }
 
         // GET: VolunteerApp/Create
         public ActionResult Create()
         {
-            return View();
+            VolunteerPostList dfl = new VolunteerPostList();
+            dfl.VolunteerPosts = db.VolunteerPosts.ToList();
+            return View(dfl);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-        [Bind("AppFName,AppLName,Phone,Email,Age,Descriptions")] VolunteerApplication volunteerapp)
+        public async Task<ActionResult> Create(DateTime PostDate,string AppFName,string AppLName,string Phone,string Email,int Age,string Descriptions,int VolunteerPostID)
         {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Add(volunteerapp);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
-            }
-            return View(volunteerapp);
+            string insertQuery = "insert into VolunteerApplictions (PostDate,AppFName,AppLName,Phone,Email,Age,Descriptions,VolunteerPostID) " +
+            "values (@postdate,@appfname,@applname,@phone,@email,@age,@description,@volunteerpostID)";
+
+            SqlParameter[] myparams = new SqlParameter[8];
+            myparams[0] = new SqlParameter("@volunteerpostID", VolunteerPostID);
+            myparams[1] = new SqlParameter("@postdate", PostDate);
+            myparams[2] = new SqlParameter("@appfname", AppFName);
+            myparams[3] = new SqlParameter("@applname", AppLName);
+            myparams[4] = new SqlParameter("@phone", Phone);
+            myparams[5] = new SqlParameter("@email", Email);
+            myparams[6] = new SqlParameter("@age", Age);
+            myparams[7] = new SqlParameter("@description", Descriptions);
+
+
+            db.Database.ExecuteSqlCommand(insertQuery, myparams);
+            return RedirectToAction("Index");
         }
 
         // edit application
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int id)
         {
-            if ((id == null) || (db.VolunteerPosts.Find(id) == null))
-            {
-                return NotFound();
-            }
-            string query = "select * from VolunteerApplications where VolunteerAppID=@id";
-            SqlParameter param = new SqlParameter("@id", id);
-            VolunteerApplication myvolunteerapplication = db.VolunteerApplications.FromSql(query, param).FirstOrDefault();
-            return View(myvolunteerapplication);
+            //find donation form where 
+            VolunteerPostList dfl = new VolunteerPostList();
+            dfl.VolunteerApplications = db.VolunteerApplications.Include(d => d.VolunteerPosts)
+                           .SingleOrDefault(d => d.VolunteerPostID == id);
+            dfl.VolunteerPosts = db.VolunteerPosts.ToList();
+            if (dfl != null) return View(dfl);
+            else return NotFound();
         }
 
         [HttpPost]
-        public ActionResult Edit(int? id, DateTime AppDate, string AppFName, string AppLName, string Descriptions, string Email, string Phone)
+        public async Task<ActionResult> Edit(int VolunteerAppID,DateTime PostDate,string AppFName,string AppLName,string Phone,string Email,int Age,string Descriptions,int VolunteerPostID)
         {
-            if ((id == null) || (db.VolunteerApplications.Find(id) == null))
+            if (db.VolunteerApplications.Find(VolunteerAppID) == null)
             {
                 return NotFound();
             }
-            string query = "update VolunteerApplications set AppDate=@appdate, AppFName=@appfname, AppLName=@applname, Descriptions=@descriptions, Email=@email, Phone=@phone" +
-                " where VolunteerAppID=@id";
-            SqlParameter[] myparams = new SqlParameter[7];
-            myparams[0] = new SqlParameter("@appdate", AppDate);
-            myparams[1] = new SqlParameter("@appfname", AppFName);
-            myparams[2] = new SqlParameter("@applname", AppLName);
-            myparams[3] = new SqlParameter("@descriptions", Descriptions);
-            myparams[4] = new SqlParameter("@email", Email);
+
+            string updateQuery = "update VolunteerApplications set PostDate=@postdate,AppFName=@appfname,AppLName=@applname,Phone=@phone,Email=@email,Age=@age,Description=@description" +
+                " where VolunteerAppID=@appid AND VolunteerPostID=@postID";
+            SqlParameter[] myparams = new SqlParameter[9];
+            myparams[0] = new SqlParameter("@appid", VolunteerAppID);
+            myparams[1] = new SqlParameter("@postID", VolunteerPostID);
+            myparams[2] = new SqlParameter("@postdate", PostDate);
+            myparams[3] = new SqlParameter("@appfname", AppFName);
+            myparams[4] = new SqlParameter("@applname", AppLName);
             myparams[5] = new SqlParameter("@phone", Phone);
-            myparams[6] = new SqlParameter("@id", id);
+            myparams[6] = new SqlParameter("@email", Email);
+            myparams[7] = new SqlParameter("@age", Age);
+            myparams[8] = new SqlParameter("@description", Descriptions);
 
-            db.Database.ExecuteSqlCommand(query, myparams);
 
-            return RedirectToAction("Index");
+            db.Database.ExecuteSqlCommand(updateQuery, myparams);
+            return RedirectToAction("Details/" + VolunteerAppID);
         }
 
         // details

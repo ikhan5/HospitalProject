@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
-namespace HospitalProject.Models.DonationModels
+namespace HospitalProject.Models.VolunteerViewsModels
 {
     public class Donation
     {
