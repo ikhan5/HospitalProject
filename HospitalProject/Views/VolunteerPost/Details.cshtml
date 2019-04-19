@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>@Html.DisplayFor(model => model.Position)</h2>
+<h2>Details of @Html.DisplayFor(model => model.Position)</h2>
 
 <div>
-    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -37,8 +36,6 @@
     </dl>
 </div>
 <div>
+    <a asp-action="Edit" asp-route-id="@Model.VolunteerPostID">Edit</a> |
     <a asp-action="Index">Back</a>
-</div>
-<div>
-<a asp-action="Create" asp-route-id="@Model.VolunteerPostID">Apply</a>
 </div>

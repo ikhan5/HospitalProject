@@ -19,8 +19,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
-using HospitalProject.Models.DonationModels;
-using HospitalProject.Models.DonationModels.ViewModels;
+using HospitalProject.Models.VolunteerViewsModels;
+using HospitalProject.Models.VolunteerViewsModels.ViewModels;
 
 namespace HospitalProject.Controllers
 {
