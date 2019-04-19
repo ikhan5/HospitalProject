@@ -1,0 +1,63 @@
+﻿@model HospitalProject.Models.MVPModels.ViewModels.NavigationListing
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Page</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.page.pageAuthor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.page.pageAuthor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.page.pageTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.page.pageTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.page.pageContent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.page.pageContent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.page.dateCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.page.dateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.page.lastModified)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.page.lastModified)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.page.pageOrder)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.page.pageOrder)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.page.Navigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.page.Navigation.navigationName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="page.pageID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

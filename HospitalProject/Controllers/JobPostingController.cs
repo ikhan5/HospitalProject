@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using HospitalProject.Models.JobModels;
+using HospitalProject.Models.JobModels.ViewModels;
 
 namespace HospitalProject.Controllers
 {
@@ -66,6 +67,95 @@ namespace HospitalProject.Controllers
             return View(jobPosting);
         }
 
+        public async Task<ActionResult> Edit(int id)
+        {
+            //find donation form where 
+            var jobpost = db.JobPostings.Find(id);
+            if (jobpost != null) return View(jobpost);
+            else return NotFound();
+        }
 
+        [HttpPost]
+        public async Task<ActionResult> Edit(int jobPostingID, string jobTitle, string jobQualifications, string jobDescription, string jobSkills, DateTime jobPostingDate, DateTime jobExpiryDate)
+        {
+            if (db.JobPostings.Find(jobPostingID) == null)
+            {
+                return NotFound();
+            }
+
+            string updateQuery = "update JobPostings set jobTitle=@title, jobQualifications=@qual,jobDescription=@desc, jobSkills = @skills, jobPostingDate =@post, jobExpiryDate = @expiry" +
+                " where jobPostingID=@id";
+            SqlParameter[] postparams = new SqlParameter[7];
+            postparams[0] = new SqlParameter("@id", jobPostingID);
+            postparams[1] = new SqlParameter("@title", jobTitle);
+            postparams[2] = new SqlParameter("@qual", jobQualifications);
+            postparams[3] = new SqlParameter("@skills", jobSkills);
+            postparams[4] = new SqlParameter("@post", jobPostingDate);
+            postparams[5] = new SqlParameter("@expiry", jobExpiryDate);
+            postparams[6] = new SqlParameter("@desc", jobDescription);
+
+            db.Database.ExecuteSqlCommand(updateQuery, postparams);
+            return RedirectToAction("Details/" + jobPostingID);
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            if (db.JobPostings.Find(id) == null)
+            {
+                return NotFound();
+            }
+
+            ApplicantsListing al = new ApplicantsListing();
+            al.jobApplications = db.JobApplications.Where(j => j.jobPostingID == id).ToList();
+            al.jobPosting = await db.JobPostings.SingleOrDefaultAsync(j => j.jobPostingID == id);
+            return View(al);
+        }
+       
+                public async Task<IActionResult> Delete(int id)
+                {
+                    if (id == null)
+                    {
+                        return NotFound();
+                    }
+
+                    JobPosting jobpost = db.JobPostings.Find(id);
+                    if (jobpost == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return View(jobpost);
+                }
+        
+                // POST: Authors/Delete/5
+                [HttpPost, ActionName("Delete")]
+                [ValidateAntiForgeryToken]
+                public async Task<ActionResult> DeleteConfirmed(int id)
+                {
+                    JobPosting jobPosting = await db.JobPostings.FindAsync(id);
+
+                    if (jobPosting.jobPostingID != id)
+                    {
+                        return Forbid();
+                    }
+
+                    db.JobPostings.Remove(jobPosting);
+                    await db.SaveChangesAsync();
+                    /*      SqlParameter donparam = new SqlParameter("@id", id);
+                            string deleteQuery = "delete from DonationForms where donationFormID=@id;";
+                            deleteQuery += "delete from Donations where donationFormID=@id";
+                            await db.Database.ExecuteSqlCommandAsync(deleteQuery, donparam);*/
+
+                    return RedirectToAction("Index");
+                }
+
+                protected override void Dispose(bool disposing)
+                {
+                    if (disposing)
+                    {
+                        db.Dispose();
+                    }
+                    base.Dispose(disposing);
+                }
     }
 }

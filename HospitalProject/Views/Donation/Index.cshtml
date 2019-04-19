@@ -34,32 +34,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.donorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.donorEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isRecurring)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.paymentMethod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.paymentAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DonationForm.donationCause)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.donationID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.donationID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.donationID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.donorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.donorEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isRecurring)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.paymentMethod)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.paymentAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonationForm.donationCause)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.donationID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.donationID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.donationID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

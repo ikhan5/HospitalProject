@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.donation.donorEmail" class="control-label"></label>
-                <input name="donorEmail" asp-for="@Model.donation.donorEmail" class="form-control" />
+                <input type="email" name="donorEmail" asp-for="@Model.donation.donorEmail" class="form-control" />
                 <span asp-validation-for="@Model.donation.donorEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.donation.paymentAmount" class="control-label"></label>
-                <input name="paymentAmount" asp-for="@Model.donation.paymentAmount" class="form-control" />
+                <input min="1" name="paymentAmount" asp-for="@Model.donation.paymentAmount" class="form-control" />
                 <span asp-validation-for="@Model.donation.paymentAmount" class="text-danger"></span>
             </div>
             <div class="form-group">

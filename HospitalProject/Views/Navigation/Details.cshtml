@@ -1,0 +1,59 @@
+﻿@model HospitalProject.Models.MVPModels.ViewModels.PageListing
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Navigation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.navigation.navigationName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.navigation.navigationName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.navigation.navigationURL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.navigation.navigationURL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.navigation.navigationPosition)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.navigation.navigationPosition)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h2>Pages</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Page Name</th>
+                <th>Page URL</th>
+                <th>Page Position</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pages in Model.pages)
+            {
+            <tr>
+                <td>@pages.pageTitle</td>
+                <td>@Model.navigation.navigationURL/@pages.pageTitle</td>
+                <td>@pages.pageOrder</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.navigation.navigationID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

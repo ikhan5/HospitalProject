@@ -1,4 +1,4 @@
-﻿@model HospitalProject.Models.DonationModels.Donation
+﻿@model HospitalProject.Models.DonationModels.ViewModels.DonationFormList
 
 @{
     ViewData["Title"] = "Delete";
@@ -12,45 +12,45 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.donorName)
+            @Html.DisplayNameFor(model => model.donation.donorName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.donorName)
+            @Html.DisplayFor(model => model.donation.donorName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.donorEmail)
+            @Html.DisplayNameFor(model => model.donation.donorEmail)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.donorEmail)
+            @Html.DisplayFor(model => model.donation.donorEmail)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.isRecurring)
+            @Html.DisplayNameFor(model => model.donation.isRecurring)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.isRecurring)
+            @Html.DisplayFor(model => model.donation.isRecurring)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.paymentMethod)
+            @Html.DisplayNameFor(model => model.donation.paymentMethod)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.paymentMethod)
+            @Html.DisplayFor(model => model.donation.paymentMethod)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.paymentAmount)
+            @Html.DisplayNameFor(model => model.donation.paymentAmount)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.paymentAmount)
+            @Html.DisplayFor(model => model.donation.paymentAmount)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DonationForm)
+            @Html.DisplayNameFor(model => model.donation.DonationForm)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DonationForm.charityName)
+            @Html.DisplayFor(model => model.donation.DonationForm.charityName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="donationID" />
+        <input type="hidden" asp-for="@Model.donation.donationID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

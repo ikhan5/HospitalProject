@@ -13,7 +13,7 @@ namespace HospitalProject.Models.JobModels
         [Key]
         public int jobPostingID { get; set; }
 
-        [Required, StringLength(255), Display(Name = "Name of Cause")]
+        [Required, StringLength(255), Display(Name = "Job Title")]
         public string jobTitle { get; set; }
 
         [StringLength(int.MaxValue), Display(Name = "Job Qualifications")]

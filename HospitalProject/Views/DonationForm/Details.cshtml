@@ -29,6 +29,12 @@
             $@Html.DisplayFor(model => model.donationForm.donationGoal)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.donationForm.totalCollected)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.donationForm.totalCollected)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.donationForm.presetAmounts)
         </dt>
         <dd>
@@ -44,10 +50,26 @@
 </div>
 
 <div>
-    @foreach(var donations in Model.donations)
-    {
-        <p> @donations.donorName donated  $@donations.paymentAmount </p>
-    }
+    <h2>Payments Made</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Donor</th>
+                <th>Amount Paid</th>
+                <th>Payment Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var donations in Model.donations)
+            {
+                <tr>
+                    <td>@donations.donorName</td>
+                    <td>$@donations.paymentAmount</td>
+                    <td>@donations.paymentMethod</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.donationForm.donationFormID">Edit</a> |
