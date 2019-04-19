@@ -34,7 +34,11 @@ namespace HospitalProject.Models
         //One doctor has many ratings
          [InverseProperty("Doctors")]
          public virtual List<Rating> Ratings { get; set; }
-        
+
+        //One doctor has many appointments
+        [InverseProperty("Doctors")]
+        public virtual List<Appointment> Appointments { get; set; }
+
 
 
     }

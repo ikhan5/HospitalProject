@@ -22,23 +22,24 @@
                 <input asp-for="medical_services_description" class="form-control" />
                 <span asp-validation-for="medical_services_description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label asp-for="medical_service_type" class="control-label"></label>
                 <input asp-for="medical_service_type" class="form-control" />
                 <span asp-validation-for="medical_service_type" class="text-danger"></span>
-            </div>
+            </div>-->
 
-            <!-- <div class="inprow">
-          <div class="inplabel">Medical Service Type </div>
-          <select id="service" name="service">
-              <option value="In">Inbound</option>
-              <option value="Out">Outbound</option>
-
-          </select>
-      </div>-->
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="medical_service_type" class="control-label"></label>
+                <select name="medical_service_type" asp-for="medical_service_type" class="form-control">
+                    <option value="Inbound">Inbound</option>
+                    <option value="Outbound">Outbound</option>
+                </select>
+                <span asp-validation-for="medical_service_type" class="text-danger"></span>
             </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
         </form>
     </div>
 </div>
