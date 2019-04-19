@@ -1,0 +1,47 @@
+﻿@model HospitalProject.Models.ParkingService
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>ParkingService</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ParkingServiceID" />
+            <div class="form-group">
+                <label asp-for="ParkingNumber" class="control-label"></label>
+                <input asp-for="ParkingNumber" class="form-control" />
+                <span asp-validation-for="ParkingNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rate" class="control-label"></label>
+                <input asp-for="Rate" class="form-control" />
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParkingServiceUserID" class="control-label"></label>
+                <input asp-for="ParkingServiceUserID" class="form-control" />
+                <span asp-validation-for="ParkingServiceUserID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

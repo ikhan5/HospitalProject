@@ -1,4 +1,6 @@
-﻿@model IEnumerable<HospitalProject.Models.PlanYourStay>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<HospitalProject.Models.PlanYourStay>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper*,ReflectionIT.Mvc.Paging
 
 @{
     ViewData["Title"] = "Index";
@@ -6,6 +8,9 @@
 
 <h2>Index</h2>
 
+<nav aria-label="Plan Your Stay">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -51,3 +56,6 @@
 }
     </tbody>
 </table>
+<nav>
+    <vc:pager paging-list="@Model" />
+</nav>

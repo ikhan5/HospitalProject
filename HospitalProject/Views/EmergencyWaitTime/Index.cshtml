@@ -1,4 +1,6 @@
-﻿@model IEnumerable<HospitalProject.Models.EmergencyWaitTime>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<HospitalProject.Models.EmergencyWaitTime>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper*,ReflectionIT.Mvc.Paging
 
 @{
     ViewData["Title"] = "Index";
@@ -6,36 +8,44 @@
 
 <h2>Index</h2>
 
+<nav aria-label="Plan Your Stay">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ServiceName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WaitTime)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WaitTime)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WaitTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EmergencyWaitTimeID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EmergencyWaitTimeID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmergencyWaitTimeID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WaitTime)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EmergencyWaitTimeID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.EmergencyWaitTimeID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.EmergencyWaitTimeID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<nav>
+    <vc:pager paging-list="@Model" />
+</nav>
