@@ -1,4 +1,4 @@
-﻿@model HospitalProject.Models.Appointment
+﻿@model HospitalProject.Models.ViewModels.AppointmentList
 
 @{
     ViewData["Title"] = "Details";
@@ -11,50 +11,50 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.client_fname)
+            @Html.DisplayNameFor(model => model.appointment.client_fname)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.client_fname)
+            @Html.DisplayFor(model => model.appointment.client_fname)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.client_lname)
+            @Html.DisplayNameFor(model => model.appointment.client_lname)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.client_lname)
+            @Html.DisplayFor(model => model.appointment.client_lname)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.client_phone)
+            @Html.DisplayNameFor(model => model.appointment.client_phone)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.client_phone)
+            @Html.DisplayFor(model => model.appointment.client_phone)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.client_emailadd)
+            @Html.DisplayNameFor(model => model.appointment.client_emailadd)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.client_emailadd)
+            @Html.DisplayFor(model => model.appointment.client_emailadd)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.date_time)
+            @Html.DisplayNameFor(model => model.appointment.date_time)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.date_time)
+            @Html.DisplayFor(model => model.appointment.date_time)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.appointment_details)
+            @Html.DisplayNameFor(model => model.appointment.appointment_details)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.appointment_details)
+            @Html.DisplayFor(model => model.appointment.appointment_details)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Doctors)
+            @Html.DisplayNameFor(model => model.appointment.Doctors)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Doctors.DoctorDepartment)
+            @Html.DisplayFor(model => model.appointment.Doctors.DoctorName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.client_id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.appointment.client_id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

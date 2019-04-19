@@ -35,7 +35,7 @@ namespace HospitalProject.Models
         public virtual Doctor Doctors { get; set; }
 
         [Required, DataType(DataType.Date), Display(Name = "Date and Time:")]
-        public string date_time { get; set; }
+        public DateTime date_time { get; set; }
 
         [Required, StringLength(255), Display(Name = "Appointment Details:")]
         public string appointment_details { get; set; }

@@ -104,31 +104,33 @@ namespace HospitalProject.Controllers
         {
             AppointmentList app = new AppointmentList();
             app.appointment = db.Appointments.Include(d => d.Doctors)
-                           .SingleOrDefault(d => d.DoctorID == id);
+                           .SingleOrDefault(d => d.client_id == id);
             app.doctors = db.Doctors.ToList();
+
+
             if (app != null) return View(app);
             else return NotFound();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(int client_id, string appointment_details, string client_emailadd, string client_fname, string client_lname,int client_phone, string date_time, int DoctorID)
+        public async Task<ActionResult> Edit(int client_id, string appointment_details, string client_emailadd, string client_fname, string client_lname,int client_phone, DateTime date_time, int DoctorID)
         {
             if (db.Appointments.Find(client_id) == null)
             {
                 return NotFound();
             }
 
-            string updateQuery = "update Appointments set appointment_details=@details, client_emailadd=@email, client_fname = @fname, client_lname = @lname, client_phone=@phn, date_time=@datetime" +
-                " where client_id=@id AND DoctorID=@docID";
+            string updateQuery = "update Appointments set appointment_details=@details, client_emailadd=@email, client_fname = @fname, client_lname = @lname, client_phone=@phn, date_time=@date_time" +
+                " where client_id=@id";
             SqlParameter[] donparams = new SqlParameter[8];
             donparams[0] = new SqlParameter("@id", client_id);
-            donparams[1] = new SqlParameter("@docID", DoctorID);
-            donparams[2] = new SqlParameter("@details", appointment_details);
-            donparams[3] = new SqlParameter("@email", client_emailadd);
-            donparams[4] = new SqlParameter("@fname", client_fname);
-            donparams[5] = new SqlParameter("@lname", client_lname);
-            donparams[6] = new SqlParameter("@phn", client_phone);
-            donparams[7] = new SqlParameter("@date_time", date_time);
+            //donparams[1] = new SqlParameter("@docID", DoctorID);
+            donparams[1] = new SqlParameter("@details", appointment_details);
+            donparams[2] = new SqlParameter("@email", client_emailadd);
+            donparams[3] = new SqlParameter("@fname", client_fname);
+            donparams[4] = new SqlParameter("@lname", client_lname);
+            donparams[5] = new SqlParameter("@phn", client_phone);
+            donparams[6] = new SqlParameter("@date_time", date_time);
 
 
             db.Database.ExecuteSqlCommand(updateQuery, donparams);
@@ -142,11 +144,11 @@ namespace HospitalProject.Controllers
             {
                 return NotFound();
             }
-            AppointmentList dfl = new AppointmentList();
-            dfl.appointment = db.Appointments.Include(d => d.Doctors)
-                           .SingleOrDefault(d => d.DoctorID == id);
-            dfl.doctors = db.Doctors.ToList();
-            return View(dfl);
+            AppointmentList applist = new AppointmentList();
+            applist.appointment = db.Appointments.Include(d => d.Doctors)
+                           .SingleOrDefault(d => d.client_id == id);
+            applist.doctors = db.Doctors.ToList();
+            return View(applist);
         }
 
         //Appointment/details
@@ -161,7 +163,6 @@ namespace HospitalProject.Controllers
              return View(appDetails);
          }*/
 
-        //Appointment/delete
         public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
@@ -169,32 +170,31 @@ namespace HospitalProject.Controllers
                 return NotFound();
             }
 
-            Appointment app = db.Appointments.Find(id);
-            if (app == null)
+
+            AppointmentList al = new AppointmentList();
+            al.appointment = db.Appointments.Include(d => d.Doctors)
+                           .SingleOrDefault(d => d.client_id == id);
+            if (al == null)
             {
                 return NotFound();
             }
-
-            return View(app);
+            return View(al);
         }
 
-        // POST: Appointment/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Appointment appDelete = await db.Appointments.FindAsync(id);
+            Appointment app = await db.Appointments.FindAsync(id);
 
-            if (appDelete.client_id != id)
+            if (app.client_id != id)
             {
                 return Forbid();
             }
 
-            db.Appointments.Remove(appDelete);
+            db.Appointments.Remove(app);
             await db.SaveChangesAsync();
-            /*	SqlParameter donparam = new SqlParameter("@id", id);
-            	string deleteQuery = "delete from Appointments where client_id=@id";
-            	await db.Database.ExecuteSqlCommandAsync(deleteQuery, donparam);*/
+
             return RedirectToAction("Index");
         }
 
@@ -205,8 +205,6 @@ namespace HospitalProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-
-
         }
     }
 }
