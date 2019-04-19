@@ -12,7 +12,7 @@ using HospitalProject.Models.GiftShop;
 using HospitalProject.Models.newsletter;
 using HospitalProject.Models.Events;
 using HospitalProject.Models.JobModels;
-using HospitalProject.Models.VolunteerViewsModels;
+using HospitalProject.Models.DonationModels;
 using HospitalProject.Models.MVPModels;
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HospitalProject.Models.VolunteerViewsModels.ViewModels
+namespace HospitalProject.Models.DonationModels.ViewModels
 {
     public class DonationFormList
     {
