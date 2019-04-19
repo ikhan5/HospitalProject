@@ -19,7 +19,6 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
-using HospitalProject.Models.VolunteerViews;
 using System.Data;
 
 namespace HospitalProject.Controllers
@@ -35,9 +34,29 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagenum)
         {
-            return View(await db.VolunteerPosts.ToListAsync());
+            // Pagination
+            var _posts = await db.VolunteerPosts.ToListAsync();
+            int postCount = _posts.Count();
+            int perpage = 3;
+            int maxpage = (int)Math.Ceiling((decimal)postCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<VolunteerPost> posts = await db.VolunteerPosts.Skip(start).Take(perpage).ToListAsync();
+
+            return View(posts);
         }
 
         // add post

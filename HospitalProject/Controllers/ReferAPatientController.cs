@@ -36,7 +36,7 @@ namespace HospitalProject.Controllers
             // Pagination
             var _referrals = await db.ReferAPatients.ToListAsync();
             int referralCount = _referrals.Count();
-            int perpage = 8;
+            int perpage = 3;
             int maxpage = (int)Math.Ceiling((decimal)referralCount / perpage) - 1;
             if (maxpage < 0) maxpage = 0;
             if (pagenum < 0) pagenum = 0;
