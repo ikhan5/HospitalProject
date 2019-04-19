@@ -14,7 +14,7 @@ namespace HospitalProject.Models
         public int RatingID { get; set; }
 
         [ForeignKey("DoctorID")]
-        public int? DoctorID { get; set; }
+        public int DoctorID { get; set; }
         //One doctors to many ratings
         public virtual Doctor Doctors { get; set; }
 
