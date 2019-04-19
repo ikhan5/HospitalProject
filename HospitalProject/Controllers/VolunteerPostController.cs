@@ -19,6 +19,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using HospitalProject.Models.VolunteerViews;
+using System.Data;
 
 namespace HospitalProject.Controllers
 {
@@ -26,36 +28,19 @@ namespace HospitalProject.Controllers
     {
         private readonly HospitalCMSContext db;
 
+        public SqlDbType VolunteerAppID { get; private set; }
+
         public VolunteerPostController(HospitalCMSContext context)
         {
             db = context;
         }
 
-        public async Task<ActionResult> Index(int pagenum)
+        public async Task<IActionResult> Index()
         {
-            // Pagination
-            var _posts = await db.VolunteerPosts.ToListAsync();
-            int postCount = _posts.Count();
-            int perpage = 10;
-            int maxpage = (int)Math.Ceiling((decimal)postCount / perpage) - 1;
-            if (maxpage < 0) maxpage = 0;
-            if (pagenum < 0) pagenum = 0;
-            if (pagenum > maxpage) pagenum = maxpage;
-            int start = perpage * pagenum;
-            ViewData["pagenum"] = (int)pagenum;
-            ViewData["PaginationSummary"] = "";
-            if (maxpage > 0)
-            {
-                ViewData["PaginationSummary"] =
-                    (pagenum + 1).ToString() + " of " +
-                    (maxpage + 1).ToString();
-            }
-
-            List<VolunteerPost> posts = await db.VolunteerPosts.Skip(start).Take(perpage).ToListAsync();
-            return View(posts);
+            return View(await db.VolunteerPosts.ToListAsync());
         }
 
-        // GET: VolunteerPost/Create
+        // add post
         public ActionResult Create()
         {
             return View();
@@ -64,7 +49,7 @@ namespace HospitalProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-        [Bind("Department,Details,Position,PostDate")] VolunteerPost volunteerpost)
+        [Bind("VolunteerPostID,PostDate,Position,Department,Details")] VolunteerPost volunteerpost)
         {
             try
             {

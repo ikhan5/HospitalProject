@@ -19,8 +19,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
-using HospitalProject.Models.DonationModels;
-using HospitalProject.Models.DonationModels.ViewModels;
+using HospitalProject.Models.VolunteerViewsModels;
+using HospitalProject.Models.VolunteerViewsModels.ViewModels;
 
 namespace HospitalProject.Controllers
 {
@@ -35,7 +35,7 @@ namespace HospitalProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await db.Donations.Include(d=>d.DonationForm).ToListAsync());
+            return View(await db.Donations.Include(d => d.DonationForm).ToListAsync());
         }
 
         // GET: Donations/Create
@@ -48,11 +48,11 @@ namespace HospitalProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(string donorName,string donorEmail, string isRecurring, int paymentAmount, string paymentMethod, int donationFormID)
+        public async Task<ActionResult> Create(string donorName, string donorEmail, string isRecurring, int paymentAmount, string paymentMethod, int donationFormID)
         {
             string insertQuery = "insert into Donations (donorName, donorEmail, isRecurring, paymentAmount, paymentMethod, donationFormID) " +
             "values (@name,@email,@recurring,@amount,@method, @formID)";
-            
+
             SqlParameter[] donparams = new SqlParameter[6];
             donparams[0] = new SqlParameter("@formID", donationFormID);
             donparams[1] = new SqlParameter("@email", donorEmail);

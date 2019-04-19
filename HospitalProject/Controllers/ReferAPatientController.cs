@@ -31,9 +31,28 @@ namespace HospitalProject.Controllers
             db = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index(int pagenum)
         {
-            return View(await db.ReferAPatients.ToListAsync());
+            // Pagination
+            var _referrals = await db.ReferAPatients.ToListAsync();
+            int referralCount = _referrals.Count();
+            int perpage = 8;
+            int maxpage = (int)Math.Ceiling((decimal)referralCount / perpage) - 1;
+            if (maxpage < 0) maxpage = 0;
+            if (pagenum < 0) pagenum = 0;
+            if (pagenum > maxpage) pagenum = maxpage;
+            int start = perpage * pagenum;
+            ViewData["pagenum"] = (int)pagenum;
+            ViewData["PaginationSummary"] = "";
+            if (maxpage > 0)
+            {
+                ViewData["PaginationSummary"] =
+                    (pagenum + 1).ToString() + " of " +
+                    (maxpage + 1).ToString();
+            }
+
+            List<ReferAPatient> referrals = await db.ReferAPatients.Skip(start).Take(perpage).ToListAsync();
+            return View(referrals);
         }
 
         // Create referapatient

@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using HospitalProject.Models.GiftShop;
+using HospitalProject.Models.GiftShop.ViewModel;
 
 namespace HospitalProject.Controllers
 {
@@ -34,36 +35,67 @@ namespace HospitalProject.Controllers
 
     public async Task<IActionResult> Index()
     {
-        return View(await db.Items.ToListAsync());
+        return View(await db.Items.Include(d => d.cart).ToListAsync());
     }
 
 
     public ActionResult Create()
     {
-        return View();
-    }
+            CartList cl = new CartList();
+            cl.carts = db.Carts.ToList();
+            return View(cl);
+        }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(
-    [Bind("ItemID, ItemDescp, Name, price, quantity")] Item item)
-    {
-        try
+    public async Task<IActionResult> Create(string ItemDescp, string Name, int price, int quantity, int CartID)
         {
-            if (ModelState.IsValid)
+            string query = "insert into Items (ItemDescp, Name, price, quantity, CartID )" +
+                "values  (@descp, @name, @price, @quantity, @id)";
+
+            SqlParameter[] billparam = new SqlParameter[5];
+
+            billparam[0] = new SqlParameter("@descp", ItemDescp);
+            billparam[1] = new SqlParameter("@name", Name);
+            billparam[2] = new SqlParameter("@price", price);
+            billparam[3] = new SqlParameter("@quantity", quantity);
+            billparam[4] = new SqlParameter("@id", CartID);
+            db.Database.ExecuteSqlCommand(query, billparam);
+            Debug.Write(query);
+            return RedirectToAction("Index");
+
+        }
+        public async Task<ActionResult> Edit(int id)
+        {
+            
+            CartList dfl = new CartList();
+            dfl.item = db.Items.Include(d => d.cart)
+                           .SingleOrDefault(d => d.ItemID == id);
+            dfl.carts = db.Carts.ToList();
+            if (dfl != null) return View(dfl);
+            else return NotFound();
+        }
+        [HttpPost]
+        public async Task<ActionResult> Edit(string ItemDescp, string Name, int price, int quantity, int CartID)
+        {
+            if (db.Items.Find(CartID) == null)
             {
-                db.Add(item);
-                await db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
+
+            string updateQuery = "update Items set ItemDescp=@descp, Name=@name, price = @price, quantity =@quantity, CartID=@id " +
+                " where CartID=@id AND ItemID=@formID";
+            SqlParameter[] donparams = new SqlParameter[5];
+            donparams[0] = new SqlParameter("@descp", ItemDescp);
+            donparams[1] = new SqlParameter("@name", Name);
+            donparams[2] = new SqlParameter("@price", price);
+            donparams[3] = new SqlParameter("@quantity", quantity);
+            donparams[4] = new SqlParameter("@id", CartID);
+            
+
+
+            db.Database.ExecuteSqlCommand(updateQuery, donparams);
+            return RedirectToAction("Details/" + CartID);
         }
-        catch (DbUpdateException)
-        {
-            ModelState.AddModelError("", "Unable to save changes. " +
-                "Try again, and if the problem persists " +
-                "see your system administrator.");
-        }
-        return View(item);
     }
-}
 }

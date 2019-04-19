@@ -9,20 +9,6 @@
 <p>
     <a asp-action="Create">Add Post</a>
 </p>
-<div class="pagination">
-    @ViewData["PaginationSummary"]
-    @Html.ActionLink("Prev",
-        "Index",
-        "VolunteerPost",
-        new { pagenum= ((int)ViewData["pagenum"]-1)}
-        )
-    |
-    @Html.ActionLink("Next",
-        "Index",
-        "VolunteerPost",
-        new { pagenum = ((int)ViewData["pagenum"] + 1) }
-        )
-</div>
 
 <table class="table">
     <thead>
@@ -53,8 +39,7 @@
                     @Html.DisplayFor(modelItem => item.Department)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.VolunteerPostID">Details</a> |
-                    <a asp-action="Edit" asp-route-id="@item.VolunteerPostID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.VolunteerPostID">More Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.VolunteerPostID">Delete</a>
                 </td>
             </tr>
